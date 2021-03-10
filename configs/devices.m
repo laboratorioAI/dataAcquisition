@@ -45,7 +45,10 @@ switch deviceType
             'Myo-ESPE-Marcelo Álvarez'
             };
     case DeviceName.gForce
-        listDevices = {'gForce_Iris'
-            'gForce_Cristal'
+        listDevices = {'gForce_1'
+        'gForce_2'
+        'gForce_3'
+        'gForce_4'
+        'gForce_5'
             };
 end
