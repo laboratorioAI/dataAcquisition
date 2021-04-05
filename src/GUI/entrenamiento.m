@@ -213,8 +213,8 @@ function connectGForce_Button_Callback(hObject, eventdata, handles)
 %% Executes on button press in connectGForce_Button.
 % -------------------------------------------------------------------------
 global deviceType gForceObject
-handles.msjText.String = {'Conectando con GForce.',
-    'Este proceso puede tardar unos minutos.',
+handles.msjText.String = {'Conectando con GForce.', ...
+    'Este proceso puede tardar unos minutos.', ...
     'Por favor, espere...'};
 bloquearGUI(handles); % pause during connection
 ledConexion(handles, 'yellow');
@@ -237,9 +237,9 @@ if isConnectedG
     handles.bat_txt.String = sprintf('%d %%',bat);
     
     if bat >= 80
-        handles.bat_txt.ForegroundColor = 'green';
+        handles.bat_txt.ForegroundColor = [0.39 0.83 0.07];
     elseif bat > 60
-        handles.bat_txt.ForegroundColor = 'yellow';
+        handles.bat_txt.ForegroundColor = [0.93 0.69 0.13];
     elseif bat > 0
         handles.bat_txt.ForegroundColor = 'red';
     else

@@ -1,0 +1,6 @@
+# List of untracked files to ignore
+.gitignore
+.gitattributes
+
+# Windows default autosave extension
+*.asv
