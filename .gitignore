@@ -4,3 +4,8 @@
 
 # Windows default autosave extension
 *.asv
+
+resources/
+
+DataAcquisition.prj
+.git/
