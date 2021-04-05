@@ -31,4 +31,3 @@ end
 %% Start data acquisition
 listaRecolectoresDatos();
 cleaningTimers();
-%
