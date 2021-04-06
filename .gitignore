@@ -7,5 +7,5 @@
 
 resources/
 
-DataAcquisition.prj
+*.prj
 .git/

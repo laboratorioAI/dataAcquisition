@@ -55,9 +55,11 @@ userData = loadUserData(userData);
 repetitionCount = userData.counterRepetition;
 
 %-% Wait bar
-transicion = load('transiciones.mat');
-transicion = transicion.transicion;
-myWaitbarTimer = timerWaitbar(handles, transicion(repetitionCount), userData);
+timeRep = userData.extraInfo.timePerRepetition;
+nameGesture = userData.gestures.classes{userData.counterGesture};
+transitionTime = getStartingTime(nameGesture, timeRep);
+
+myWaitbarTimer = timerWaitbar(handles, transitionTime, userData);
 start(myWaitbarTimer);
 drawnow
 
