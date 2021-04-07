@@ -24,7 +24,7 @@ Matlab 9.9.0.1592791 (R2020b) Update 5.
 
 %% Get info
 username = userData.userInfo.username;
-filepath = [pwd '\data\' username '\'];
+filepath = ['.\data\' username '\'];
 
 gestosRealizados = userData.gestures.classes;
 nameGesture = gestosRealizados{userData.counterGesture};

@@ -1,5 +1,5 @@
 # Emg data acquisition Interface
-This software allows to record hand gesture signals using a surface Emg device.
+This software allows to record hand gesture signals using a surface Emg device (Myo Armband or GForce Pro).
 # Running
 Just run the script *ejecutar.m* in matlab. 
 The gForce_mex Mex function must be compiled and added to the path. If you receive an error about it, check the gForce_interface project for help.

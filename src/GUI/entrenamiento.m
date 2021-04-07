@@ -52,7 +52,7 @@ clearEMG(handles);
 %-% Load data
 global userData
 userData = loadUserData(userData);
-repetitionCount = userData.counterRepetition;
+% repetitionCount = userData.counterRepetition;
 
 %-% Wait bar
 timeRep = userData.extraInfo.timePerRepetition;
@@ -60,6 +60,7 @@ nameGesture = userData.gestures.classes{userData.counterGesture};
 transitionTime = getStartingTime(nameGesture, timeRep);
 
 myWaitbarTimer = timerWaitbar(handles, transitionTime, userData);
+userData.lastTransitionTime = transitionTime;
 start(myWaitbarTimer);
 drawnow
 
@@ -95,16 +96,20 @@ moverWaitbar(handles, 0, 0);
 
 if errorInData
     uiwait(errordlg('No se recibió datos del dispositivo!', '¡Error!', 'modal'));
-    msgbox({'Intente grabar nuevamente la repetición.'
-        'De seguir sucediendo el error: reconecte el dongle, y reinicie matlab y el dispositivo'},'Conexión','help', 'modal')
+    msgbox({'Intente grabar nuevamente la repetición.',...
+        '',...
+        'De seguir sucediendo el error:',...
+        '   1. Reinicie el dispositivo',...
+        '   2. Revise la batería',...
+        '   3. Reconecte el dongle USB',...
+        '   4. Reinicie matlab'},'Conexión','help', 'modal')
     handles.repetirButton.Enable = 'on';
-    handles.grabarButton.Enable = 'on';
+    handles.grabarButton.Enable = 'off';
     drawnow
     return;
 end
 %-% show current emgs! depends on counters!
-userData.lastTransitionTime = transicion(repetitionCount);
-plotEMGSaved(handles, userData, transicion(repetitionCount));
+repetirFlag = plotEMGSaved(handles, userData, transitionTime);
 
 %-% Grabar
 saveUserData(); % usa la variable global
@@ -121,8 +126,19 @@ if finishTraining
     return;
 end
 
-handles.repetirButton.Enable = 'on';
-handles.grabarButton.Enable = 'on';
+if repetirFlag
+    % debe repetir
+    uiwait(warndlg('Pocos datos recibidos, por favor repita.', ...
+        'Error en la transmisión', 'modal'));
+    
+    handles.repetirButton.Enable = 'on';
+    handles.grabarButton.Enable = 'off';
+    
+else
+    % normal continuation
+    handles.repetirButton.Enable = 'on';
+    handles.grabarButton.Enable = 'on';
+end
 drawnow
 
 function empezarEntrenamientoButton_Callback(hObject, eventdata, handles)
@@ -214,6 +230,12 @@ end
 function connectGForce_Button_Callback(hObject, eventdata, handles)
 %% Executes on button press in connectGForce_Button.
 % -------------------------------------------------------------------------
+% Warning!
+uiwait(warndlg({'La conexión con GForce Pro todavía está en versión beta.', ...
+    '¡Permanezca atento!', 'Es posible que la comunicación se interrumpa.', ...
+    '', 'Se recomienda usar el dispositivo completamente cargado.'},...
+    'ADVERTENCIA', 'modal'));
+
 global deviceType gForceObject
 handles.msjText.String = {'Conectando con GForce.', ...
     'Este proceso puede tardar unos minutos.', ...
@@ -398,7 +420,11 @@ if isValidRestaurar
     handles.repetirButton.Visible = 'on';
     drawnow
 else
-    bloquearGUI(handles, true);
+    handles.grabarButton.Enable = 'off';
+    handles.repetirButton.Enable = 'off';
+    
+    handles.empezarEntrenamientoButton.Enable = 'on';
+    handles.restaurarButton.Enable = 'on';
 end
 
 

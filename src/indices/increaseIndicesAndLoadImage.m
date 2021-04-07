@@ -57,6 +57,7 @@ userData.counterRepetition = countRepetition;
 %% Set gesture and repetition in GUI
 gestureName = userData.gestures.classes{countGesture};
 handles.tituloGestoText.String = gestureName;
-handles.repeticionesText.String = [num2str(userData.counterRepetition) '/' num2str(repXClass(countGesture))]; % rep: 2/3
+handles.repeticionesText.String = [num2str(userData.counterRepetition) ...
+    '/' num2str(repXClass(countGesture))]; % rep: 2/3
 drawnow
 end

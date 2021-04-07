@@ -15,7 +15,6 @@ jonathan.a.zea@ieee.org
 Matlab 9.9.0.1592791 (R2020b) Update 5.
 %}
 
-%% 
 %% Clean environment
 close all;
 % myoObject global variable that handles myo armband

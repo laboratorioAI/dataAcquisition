@@ -1,4 +1,7 @@
-function plotEMGSaved(handles, userData, transicion)
+function repetirFlag = plotEMGSaved(handles, userData, transicion)
+% returns true when too few samples in the input data
+
+repetirFlag = false; % default
 global deviceType gForceObject
 %-% current
 gestureCount = userData.counterGesture;
@@ -29,9 +32,13 @@ muestrasAq = length(emgs);
 handles.muestrasText.String = num2str(muestrasAq);
 
 if muestrasAq < 0.9 * timeGesture * freq
+    % pocas muestras!
     handles.muestrasText.ForegroundColor = [1 0 0];
-    
+    % forzamos a repetir
+    repetirFlag  = true;    
 else
+    % muestras correctas
+    
     handles.muestrasText.ForegroundColor = [0 0 1];
 end
 
@@ -71,9 +78,10 @@ if deviceType == DeviceName.gForce
     handles.muestrasQuat_txt.String = num2str(muestrasQ);
     
     if muestrasQ < 0.9 * timeGesture * freqQuat
+        % pocas muestras!
         handles.muestrasQuat_txt.ForegroundColor = [1 0 0];
-        
     else
+        % muestras correctas
         handles.muestrasQuat_txt.ForegroundColor = [0 0 1];
     end
     

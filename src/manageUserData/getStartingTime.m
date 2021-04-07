@@ -49,4 +49,4 @@ for kGesture = oldGestures
 end
 % else
 % starting at fixed value
-transitionTime = options.recording.fixedStarting;
+transitionTime = options.recording.fixedStarting*timeRep/100;

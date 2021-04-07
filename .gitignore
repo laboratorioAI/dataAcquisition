@@ -9,3 +9,5 @@ resources/
 
 *.prj
 .git/
+
+temp/
