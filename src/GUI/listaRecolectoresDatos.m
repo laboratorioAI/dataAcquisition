@@ -68,12 +68,12 @@ guidata(hObject, handles);
 movegui(hObject,'center'); % mostrando en el centro
 global lista;
 [encabezado, lista, num] = crearListadeRecolectoresDeDatos();
-str = cell(num + 2, 1);
+str = cell(num + 1, 1);
 str{1} = encabezado;
 for i = 2:(num + 1)
     str{i} = lista(i - 1).name;
 end
-str{num + 2} = 'MI NOMBRE NO ESTÁ ARRIBA';
+% str{num + 2} = 'My name is not here';
 set(handles.listaRecolectoresPopMenu, 'String', str);
 
 
@@ -123,44 +123,24 @@ function aceptarPushbutton_Callback(hObject, eventdata, handles)
 global lista nombreRecolectorDeDatos;
 valor = get(handles.listaRecolectoresPopMenu, 'Value');
 if valor == 1 % No se selecciona un nombre
-    str = {'Debe seleccionar su nombre de la lista'};
-    uiwait(msgbox(str,'ADVERTENCIA','warn'));
-else % El nombre del usuario no está registrado
-    popMenuList = get(handles.listaRecolectoresPopMenu, 'String');
-    if strcmpi( popMenuList{valor}, 'MI NOMBRE NO ESTÁ ARRIBA' )
-        str{1} = 'INSTRUCCIONES';
-        str{2} = '';
-        str{3} = 'Para poder usar este programa debe estar autorizado.';
-        str{4} = 'Por favor, envíe un email siguiendo las siguientes instrucciones:';
-        str{5} = '';
-        str{6} = 'Asunto: CEPRA2019 - Software de Segmentación - Nuevo Usuario';
-        str{7} = '';
-        str{8} = 'Direcciones de email:';
-        str{9} = 'marco.benalcazar@epn.edu.ec';
-        str{10} = 'lorena.barona@epn.edu.ec';
-        str{11} = 'angel.valdivieso@epn.edu.ec';
-        str{12} = '';
-        str{13} = 'En el contenido del email agregar los siguientes datos:';
-        str{14} = '';
-        str{15} = 'Nombre y Apellido';
-        str{16} = 'Celular';
-        str{17} = 'Institución';
-        uiwait(msgbox(str, 'CONTACTO','help'));
+    str = {'Choose a name from the list'};
+    uiwait(msgbox(str,'WARNING','warn'));
+else
+    % popMenuList = get(handles.listaRecolectoresPopMenu, 'String');
+    
+    nombreRecolectorDeDatos = lista(valor - 1);
+    qstring{1} = 'You selected:';
+    qstring{2} = '';
+    qstring{3} = upper(lista(valor - 1).name);
+    qstring{4} = '';
+    qstring{5} = '¿Is it right?';
+    choice = questdlg(qstring,'Data recolector',...
+        'Yes','No','Yes');
+    if strcmpi(choice,'Yes')
         delete(gcf);
-    else
-        nombreRecolectorDeDatos = lista(valor - 1);
-        qstring{1} = 'Usted ha selecionado:';
-        qstring{2} = '';
-        qstring{3} = upper(lista(valor - 1).name);
-        qstring{4} = '';
-        qstring{5} = '¿Es correcto?';
-        choice = questdlg(qstring,'RECOLECTOR DE DATOS',...
-            'SI','NO','NO');
-        if strcmpi(choice,'SI')
-            delete(gcf);
-            entrenamiento();
-        end
+        entrenamiento();
     end
+    
 end
 
 % --- Executes when user attempts to close figure1.
@@ -173,15 +153,15 @@ function figure1_CloseRequestFcn(hObject, eventdata, handles)
 global nombreRecolectorDeDatos isRelease;
 
 if isRelease
-    qstring = '¿Está seguro de salir del programa?';
-    choice = questdlg(qstring,'SALIR',...
-        'SI','NO','NO');
-    if strcmpi(choice,'SI')
+    qstring = 'Are you sure to leave this program?';
+    choice = questdlg(qstring,'Exit',...
+        'YES','NO','NO');
+    if strcmpi(choice,'YES')
         nombreRecolectorDeDatos = [];
         delete(gcf);
     end
 else
-    % debugging fast!    
+    % debugging fast!
     debugger.name =  'Rodrigo Rodriguez';
     debugger.email = 'prueba@pruebas.prueba';
     debugger.cellphone = '911';
@@ -190,5 +170,5 @@ else
     nombreRecolectorDeDatos = debugger;
     
     delete(gcf);
-    entrenamiento();    
+    entrenamiento();
 end

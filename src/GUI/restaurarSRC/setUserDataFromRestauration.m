@@ -11,11 +11,8 @@ handles.emailText.String = userInfo.email;
 
 
 handles.lesionCheck.Value = userInfo.hasSufferedArmDamage;
-if isequal(userInfo.gender,'Mujer')
-    handles.bienvenidoText.String = ['Bienvenida ' userData.userInfo.username];
-else
-    handles.bienvenidoText.String = ['Bienvenido ' userData.userInfo.username];
-end
+handles.bienvenidoText.String = ['Welcome ' userData.userInfo.username];
+
 
 %% Measures
 handles.codMyoText.String = num2str(userInfo.fromElbowToMyo);

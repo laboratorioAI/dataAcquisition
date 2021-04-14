@@ -26,7 +26,7 @@ Ahora solo lo sabe dios.
 Matlab 9.9.0.1538559 (R2020b) Update 3.
 %}
 
-handles.msjText.String = 'Mire atentamente el gif instructivo.';
+handles.msjText.String = 'Watch carefully the gif.';
 
 %% config
 gifName = ['.\gifs\the11Gestures\' gestureName '.gif'];

@@ -35,7 +35,7 @@ for kGesture = classes % loop by gesture, gathering!
         dataReps = load([filepath nameGesture '.mat'], 'reps');
         userData.gestures.(nameGesture) = dataReps.reps.(nameGesture);
     else
-        error('Archivo del gesto __%s__ no encontrado!\nRealice el proceso de "Reanudar"', nameGesture)
+        error('Gesture file not found __%s__!\nDo the RESUME process', nameGesture)
     end
 end
 

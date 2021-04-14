@@ -95,8 +95,8 @@ repetitionNum = 1;
 if ~isRelease
     figure1_CloseRequestFcn(hObject, eventdata, handles);
 else
-    str = 'Primero vamos a grabar el gesto de sincronización.';
-    uiwait(msgbox(str, 'INFORMACIÓN','help'));
+    str = 'First, the sync gesture...';
+    uiwait(msgbox(str, 'INFORMATION','help'));
     
     handles.sampleNumberText.String = [num2str(repetitionNum) ' / ' num2str(numOfRepetitions)];
 end
@@ -184,9 +184,9 @@ function figure1_CloseRequestFcn(hObject, eventdata, handles)
 global numOfRepetitions repetitionNum isRelease;
 global userData
 if repetitionNum <= numOfRepetitions && isRelease
-    str{1} = 'No puede salir de esta interfaz.';
-    str{2} = 'Debe completar todas las grabaciones!';
-    msgbox(str,'ADVERTENCIA','warn');
+    str{1} = 'Can"t leave this interface.';
+    str{2} = 'Please, complete the samples!';
+    msgbox(str,'WARNING','warn');
 else
     userData.counterGesture = 1;
     drawnow
@@ -302,12 +302,12 @@ switch deviceType
         sample.pose_myo = myoObject.myoData.pose_log;
         
         if isempty(sample.emg)
-            errordlg('¡El Myo no está conectado!','¡ERROR DE CONEXIÓN!');
+            errordlg('Myo armband not connected!','CONNECTION ERROR!');
         end
         
         if any(sample.pose_myo == 65535)
-            errordlg('El reconocimiento de gestos del Myo no está funcionando',...
-                '¡ERROR DE RECONOCIMIENTO (65535)!');
+            errordlg('Myo Armband hand gesture recognition not working',...
+                '¡RECOGNITION ERROR (65535)!');
         end
         
         sample.rot = myoObject.myoData.rot_log();
@@ -325,7 +325,7 @@ switch deviceType
         % sample.emg = (double(gForceObject.getEmg())'- 127)/128;
         sample.emg = gForceObject.getEmg()'; %8bits
         if isempty(sample.emg)
-            errordlg('¡GForce no está conectado!','¡ERROR DE CONEXIÓN!');
+            errordlg('¡GForce not connected!','CONNECTION ERROR!');
         end
         
         
@@ -385,12 +385,12 @@ end
 for cidx = 1:8
     idxSTR = num2str(cidx);
     ax = handles.(['axes' idxSTR]);
-%     cmd = ['plot(' ax ', emgs(:,' idxSTR '));'];
-%     cmd = [cmd 'xlim(' ax ', [0 xlimit]);'];
-%     cmd = [cmd 'ylim(' ax ', [yMin yMax]);'];
-%     cmd = [cmd 'line([transSTR transSTR],[yMin yMax],''LineWidth'',2'...
-%         ',''Color'',[1 0.8043 0],''Parent'',' ax ');'];
-%     eval(cmd);
+    %     cmd = ['plot(' ax ', emgs(:,' idxSTR '));'];
+    %     cmd = [cmd 'xlim(' ax ', [0 xlimit]);'];
+    %     cmd = [cmd 'ylim(' ax ', [yMin yMax]);'];
+    %     cmd = [cmd 'line([transSTR transSTR],[yMin yMax],''LineWidth'',2'...
+    %         ',''Color'',[1 0.8043 0],''Parent'',' ax ');'];
+    %     eval(cmd);
     
     plot(ax, emgs(:,cidx));
     xlim(ax, [0 xlimit]);

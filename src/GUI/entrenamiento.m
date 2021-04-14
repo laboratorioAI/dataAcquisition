@@ -95,14 +95,14 @@ drawnow;
 moverWaitbar(handles, 0, 0);
 
 if errorInData
-    uiwait(errordlg('No se recibió datos del dispositivo!', '¡Error!', 'modal'));
-    msgbox({'Intente grabar nuevamente la repetición.',...
+    uiwait(errordlg('No data received!', 'ERROR!', 'modal'));
+    msgbox({'Try recording again.',...
         '',...
-        'De seguir sucediendo el error:',...
-        '   1. Reinicie el dispositivo',...
-        '   2. Revise la batería',...
-        '   3. Reconecte el dongle USB',...
-        '   4. Reinicie matlab'},'Conexión','help', 'modal')
+        'If the error keeps appearing:',...
+        '   1. Restart the device',...
+        '   2. Check the battery',...
+        '   3. Unplug and plug the dongle USB',...
+        '   4. Restart matlab'},'Connection','help', 'modal')
     handles.repetirButton.Enable = 'on';
     handles.grabarButton.Enable = 'off';
     drawnow
@@ -128,8 +128,8 @@ end
 
 if repetirFlag
     % debe repetir
-    uiwait(warndlg('Pocos datos recibidos, por favor repita.', ...
-        'Error en la transmisión', 'modal'));
+    uiwait(warndlg('Few data received, please record again.', ...
+        'Transmission error', 'modal'));
     
     handles.repetirButton.Enable = 'on';
     handles.grabarButton.Enable = 'off';
@@ -170,11 +170,9 @@ if isDataValid
     drawnow
     
     %-% GUI
-    if isequal(userData.userInfo.gender,'Mujer')
-        handles.bienvenidoText.String = ['Bienvenida ' userData.userInfo.username];
-    else
-        handles.bienvenidoText.String = ['Bienvenido ' userData.userInfo.username];
-    end
+    % not needed anymore!
+    handles.bienvenidoText.String = ['Welcome ' userData.userInfo.username];
+    
     countGesture = 1; % muestro el primer gesto
     firstGesture = userData.gestures.classes{1};
     repXClass = userData.gestures.repXClass;
@@ -189,10 +187,10 @@ if isDataValid
     % infame sync
     if isRelease
         %-% Recolectar datos de sincronización
-        handles.msjText.String = 'Esperando adquisición de syncs';
+        handles.msjText.String = 'Waiting sync recordings!';
         uiwait(sincronizacion); % debe terminar correctamente, si no muere!
-        str = 'Continuamos con la adquisición de datos.';
-        uiwait(msgbox(str, 'INFORMACIÓN','help'));
+        str = 'Resuming data acquisition.';
+        uiwait(msgbox(str, 'Information','help'));
         drawnow
     end
     handles.msjText.String = '';
@@ -202,7 +200,7 @@ if isDataValid
     handles.repetirButton.Visible = 'on';
     drawnow
 else
-    handles.msjText.String = {'DATOS NO VÁLIDOS', msjPrint};
+    handles.msjText.String = {'NOT VALID DATA', msjPrint};
 end
 
 function numRepRelaxText_Callback(hObject, eventdata, handles)
@@ -231,15 +229,15 @@ function connectGForce_Button_Callback(hObject, eventdata, handles)
 %% Executes on button press in connectGForce_Button.
 % -------------------------------------------------------------------------
 % Warning!
-uiwait(warndlg({'La conexión con GForce Pro todavía está en versión beta.', ...
-    '¡Permanezca atento!', 'Es posible que la comunicación se interrumpa.', ...
-    '', 'Se recomienda usar el dispositivo completamente cargado.'},...
-    'ADVERTENCIA', 'modal'));
+uiwait(warndlg({'GForce Pro connection is still in beta.', ...
+    '¡Be cautious!', 'It is possible that the connection is interrupted.', ...
+    '', 'It is recommended to use the device when it is fully charged.'},...
+    'WARNING', 'modal'));
 
 global deviceType gForceObject
-handles.msjText.String = {'Conectando con GForce.', ...
-    'Este proceso puede tardar unos minutos.', ...
-    'Por favor, espere...'};
+handles.msjText.String = {'Connecting with GForce.', ...
+    'This can take several minutes.', ...
+    'Please wait...'};
 bloquearGUI(handles); % pause during connection
 ledConexion(handles, 'yellow');
 drawnow
@@ -272,7 +270,7 @@ if isConnectedG
     
     
     %-% parámetros de inicio!
-    handles.msjText.String = 'Configure los parámetros de adquisición y pulse EMPEZAR';
+    handles.msjText.String = 'Fill the user info and press START!';
     handles.empezarEntrenamientoButton.Enable = 'on';
     handles.restaurarButton.Enable = 'on';
     
@@ -298,7 +296,7 @@ function connectMyo_Button_Callback(hObject, eventdata, handles)
 %%
 % -------------------------------------------------------------------------
 global deviceType
-handles.msjText.String = 'CONECTANDO, ESPERE...';
+handles.msjText.String = 'CONNECTING, please, wait...';
 % isConnectedMyo = connectFakeMyo();
 isConnectedMyo = connectMyo();
 
@@ -307,7 +305,7 @@ if isConnectedMyo
     ledConexion(handles, true);
     
     %-% parámetros de inicio!
-    handles.msjText.String = 'Configure los parámetros de adquisición y pulse EMPEZAR';
+    handles.msjText.String = 'Fill the user info and press START!';
     handles.empezarEntrenamientoButton.Enable = 'on';
     handles.restaurarButton.Enable = 'on';
     
@@ -319,7 +317,7 @@ if isConnectedMyo
     %-% devices
     handles.listOfMyos.String = devices(deviceType);
 else
-    handles.msjText.String = '¡CONECTE EL MYO CON MATLAB!';
+    handles.msjText.String = '¡Connect the Myo with Matlab';
     ledConexion(handles, false);
     handles.empezarEntrenamientoButton.Enable = 'off';
     handles.restaurarButton.Enable = 'off';
@@ -331,7 +329,7 @@ function edadText_Callback(hObject, eventdata, handles)
 edad = str2double(handles.edadText.String);
 if ~isnumeric(edad)
     handles.edadText.String = '';
-    errordlg('Edad Incorrecta', 'Error', 'modal')
+    errordlg('Wrong age', 'Error', 'modal')
 end
 
 function edadText_CreateFcn(hObject, eventdata, handles)
@@ -344,7 +342,7 @@ function perimetroText_Callback(hObject, eventdata, handles)
 perimetro = str2double(handles.perimetroText.String);
 if ~isnumeric(perimetro)
     handles.perimetroText.String = '';
-    errordlg('núm Incorrecto', 'Error', 'modal')
+    errordlg('Must be number', 'Error', 'modal')
 end
 
 function perimetroText_CreateFcn(hObject, eventdata, handles)
@@ -357,7 +355,7 @@ function cubCodoText_Callback(hObject, ~, handles)
 cubCodo = str2double(handles.cubCodoText.String);
 if ~isnumeric(cubCodo)
     handles.cubCodoText.String = '';
-    errordlg('núm Incorrecto', 'Error', 'modal')
+    errordlg('must be number', 'Error', 'modal')
 end
 
 function cubCodoText_CreateFcn(hObject, eventdata, handles)
@@ -370,7 +368,7 @@ function codMyoText_Callback(hObject, eventdata, handles)
 codMyo = str2double(handles.codMyoText.String);
 if ~isnumeric(codMyo)
     handles.codMyoText.String = '';
-    errordlg('núm Incorrecto', 'Error', 'modal')
+    errordlg('must be number', 'Error', 'modal')
 end
 
 function codMyoText_CreateFcn(hObject, eventdata, handles)
@@ -397,8 +395,8 @@ function restaurarButton_Callback(hObject, eventdata, handles)
 %%
 global isValidRestaurar userData % myoObject
 bloquearGUI(handles);
-handles.msjText.String = {'Esperando continuar desde punto de restauración'
-    'Por favor, espere...'};
+handles.msjText.String = {'Waiting to resume from restauration point'
+    'Please, wait...'};
 drawnow
 uiwait(restaurar); % busca usuario y actualiza punto de grabado!
 
@@ -456,10 +454,10 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 function repetirButton_Callback(hObject, eventdata, handles)
-pregunta = questdlg('¿Está seguro que quiere repetir la última muestra?', ...
-    'CONFIRMAR','SI', 'NO', 'SI');
+pregunta = questdlg('Are you sure you want to repeat the last recording?', ...
+    'CONFIRM','YES', 'NO', 'YES');
 
-if isequal(pregunta,'SI')
+if isequal(pregunta,'YES')
     decreaseIndicesAndLoadImage(handles);
 end
 
@@ -539,38 +537,31 @@ function acercaDe_Callback(hObject, eventdata, handles)
 % hObject    handle to acercaDe (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-str(1) = {'Adquisición de Señales Electromiográficas (EMG) del Brazo Humano'};
-str(2) = {''};
-str(3) = {'Versión 3 atualizada por Jonathan Zea'};
-str(4) = {'Reconocimiento de Gestos'};
-str(5) = {'Laboratorio de Investigación en Inteligencia y Visión Artificial'};
-str(6) = {'Revisión 1: 09 de julio de 2019'};
-str(7) = {'Revisión 2: 20 de julio de 2019'};
-str(8) = {'Revisión 3: 20 de agosto de 2019'};
-str(8) = {'Revisión 4: 3 de febrero de 2021'};
-str(9) = {''};
-str(10) = {'Versión 1 creada por el Ing. Jonathan Zea y el Ing. Cristhian Motoche'};
-str(11) = {'Agosto de 2018'};
-msgbox(str,'ACERCA DE...','help');
+str = {'Data acquisition of Hand Gesture Emg signals'
+    ''
+    'Versión 3 atualizada por Jonathan Zea'
+    'Reconocimiento de Gestos'
+    'Laboratorio de Investigación en Inteligencia y Visión Artificial'
+    'Revisión 1: 09 de julio de 2019'
+    'Revisión 2: 20 de julio de 2019'
+    'Revisión 3: 20 de agosto de 2019'
+    'Revisión 4: 3 de febrero de 2021'
+    'Revisión 4: 3 de febrero de 2021'
+    'Revision 5: April 14 2021 (english version)'
+    ''
+    'Versión 1 creada por el Ing. Jonathan Zea y el Ing. Cristhian Motoche'
+    'Agosto de 2018'};
+msgbox(str,'About...','help');
 
 % --------------------------------------------------------------------
 function myoDiagnostics_Callback(hObject, eventdata, handles)
 % hObject    handle to myoDiagnostics (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-str = {'Asegúrese que el receptor bluetooth del Myo esté conectado al PC.'};
-uiwait(msgbox(str,'AVISO','help'));
+str = {'Make sure USB dongle is connected to the PC'};
+uiwait(msgbox(str, 'Alert', 'help'));
 web('http://diagnostics.myo.com/');
 
-
-% --------------------------------------------------------------------
-function internetBrowser_Callback(hObject, eventdata, handles)
-% hObject    handle to internetBrowser (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-str = {'Asegúrese de tener conexión a Internet.'};
-uiwait(msgbox(str,'AVISO','help'));
-web('https://www.google.com/');
 
 % --- Executes when user attempts to close lienzoFig.
 function lienzoFig_CloseRequestFcn(hObject, eventdata, handles)
@@ -643,47 +634,44 @@ function dataAdquisitionInstructions_Callback(hObject, eventdata, handles)
 % hObject    handle to dataAdquisitionInstructions (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-str{1} = 'INSTRUCCIONES PARA LA ADQUISICIÓN DE DATOS';
-str{2} = '';
-str{3} = '1. Revisar el nivel de batería del brazalete seleccionado.';
-str{4} = '2. Limpiar el antebrazo del usuario con alcohol.';
-str{5} = '3. Colocar el brazalete en el antebrazo derecho del usuario.';
-str{6} = '4. Sincronizar el brazalete.';
-str{7} = '5. Realizar el “Diagnóstico del Myo en la Web.” (en caso de usar brazalete Myo).';
-str{8} = '6. Conectar con Maltab.';
-str{9} = '7. Ingresar los datos del usuario.';
-str{10} = '8. Tomar una fotografía del antebrazo vistiendo el brazalete.';
-str{11} = '9. Realizar la adquisición de datos.';
-str{12} = '10. Apagar el brazalete.';
-str{13} = '11. Limpiar los electrodos del brazalete con alcohol y algodón.';
-
-str{14} = '';
-str{15} = 'En caso de error, se debe reiniciar matlab, apagar y prender nuevamente el brazalete.';
-msgbox(str, 'INSTRUCCIONES','help');
+str = {'DATA ACQUISITION INSTRUCTIONS '
+    ''
+    '1. Check the battery level of the device.'
+    '2. Clean foream with alcohol.'
+    '3. Wear the device in the right foream.'
+    '4. Sync the device.'
+    '5. Do “Web diagnostics” (in case of using Myo armband).'
+    '6. Connect with Maltab.'
+    '7. Fill user info.'
+    '8. Take photography of the foream when wearing the device.'
+    '9. Do the whole data acquisition.'
+    '10. Turn off the device.'
+    '11. Clean electrodes with alcohol.'
+    ''
+    'In the case of an error, restart matlab, restart device.'};
+msgbox(str, 'INSTRUCTIONS','help');
 
 % --------------------------------------------------------------------
 function contactInformation_Callback(hObject, eventdata, handles)
 % hObject    handle to contactInformation (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-str{1} = 'INFORMACIÓN PARA CONTACTO';
-str{2} = '';
-str{3} = 'En el que caso que detecte algún error en este programa';
-str{4} = 'por favor repórtelo vía email con los siguientes datos:';
-str{5} = '';
-str{6} = 'Asunto: HGR - Software Adquisición Datos';
-% str{6} = 'Asunto: CEPRA2019 - Software Adquisición Datos';
-str{7} = '';
-str{8} = 'Direcciones de email:';
-str{9} = 'marco.benalcazar@epn.edu.ec';
-str{10} = 'lorena.barona@epn.edu.ec';
-str{11} = 'angel.valdivieso@epn.edu.ec';
-str{12} = '';
-str{13} = 'Por favor, no olvide identificarse e indicar su institución.';
-str{14} = '';
-str{15} = 'Finalmente, recomendamos enviar una captura de pantalla que';
-str{16} = 'permita visualizar el error o problema en cuestión.';
-msgbox(str, 'CONTACTO','help');
+str = {'CONTACT INFORMATION'
+    ''
+    'In case you detect an error in this software'
+    'please report it by email to:'
+    ''
+    'Subject: HGR - Data acquistion Software'
+    ''
+    'Email address:'
+    'marco.benalcazar@epn.edu.ec'
+    'lorena.barona@epn.edu.ec'
+    'angel.valdivieso@epn.edu.ec'
+    ''
+    'With the screenshot of the error.'
+    'Thank you.'};
+
+msgbox(str, 'CONTACT','help');
 
 
 % --------------------------------------------------------------------

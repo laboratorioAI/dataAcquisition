@@ -33,9 +33,9 @@ while ~checkFoto(userName)
     
     if i == 1
         % in the first execution shows an indication message
-        uiwait(msgbox('¡No se olvide de tomar una fotografía del antebrazo del usuario!','Fotografía','help','modal'));
+        uiwait(msgbox('Do not forget to take the photo of the foream!','Photo','help','modal'));
     else
         %
-        uiwait(warndlg(['Asegúrese de haber tomado la fotografía y copiarla en ".\data\' userName '\"'], '¡Fotografía no encontrada!', 'modal'));
+        uiwait(warndlg(['Make sure that the photo was taken and moved to ".\data\' userName '\"'], '¡Photo not found!', 'modal'));
     end
 end

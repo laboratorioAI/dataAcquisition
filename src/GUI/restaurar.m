@@ -66,7 +66,7 @@ theSelected.repXGestoRealizadas = repXGestoRealizadas;
 if isDataComplete
     handles.incompletoText.String = '';
 else
-    handles.incompletoText.String = 'ALERTA, USUARIO CON DATOS INCOMPLETOS';
+    handles.incompletoText.String = 'WARNING, USER WITH INCOMPLETE RECORDINGS';
 end
 
 

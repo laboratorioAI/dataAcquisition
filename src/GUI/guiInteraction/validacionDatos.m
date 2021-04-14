@@ -5,51 +5,52 @@ msjPrint = '';
 % nameUser
 nameUser = handles.nameUserText.String;
 if isempty(nameUser)
-    msjPrint = 'Ingrese correctamente el nombre!';
+    msjPrint = 'Wrong name!';
     return
 end
 
 % edad
 edad = str2double(handles.edadText.String);
-if ~isnumeric(edad) || isnan(edad)
-    msjPrint = 'Ingrese correctamente la edad!';
+if ~isnumeric(edad) || isnan(edad) || edad <= 5
+    msjPrint = 'Wrong age!';
     return
 else
-    if edad < 18
-        msjPrint = 'No se admiten menores de 18 años!';
-        return
-    end
+    % why?
+%     if edad < 18
+%         msjPrint = 'No se admiten menores de 18 años!';
+%         return
+%     end
 end
 
 % grupo Etnico
 etnia = handles.etniaText.String;
 if isempty(etnia)
-    msjPrint = 'Ingrese correctamente la etnia!';
+    msjPrint = 'Wrong ethnic group!';
     return
 end
 
 % ocupacion
 ocupacion = handles.ocupacionText.String;
 if isempty(ocupacion)
-    msjPrint = 'Ingrese correctamente la ocupacion!';
+    msjPrint = 'Wrong occupation!';
     return
 end
 
 % numero repeticiones por gesto
 numRep = str2double(handles.numRepText.String);
-if ~isnumeric(numRep) || isnan(numRep)
-    msjPrint = 'Ingrese correctamente el numero de repeticiones por gesto!';
+if ~isnumeric(numRep) || isnan(numRep) || numRep <= 0
+    msjPrint = 'wrong number of samples!';
     return
 end
 
 % tiempo de recoleccion
 tiempo = str2double(handles.timeGestureText.String);
 if ~isnumeric(tiempo) || isnan(tiempo)
-    msjPrint = 'Ingrese correctamente el tiempo de grabacion por repeticion!';
+    msjPrint = 'wrong recording time!';
     return
 else
     if tiempo <= 0
-        msjPrint = 'El tiempo de grabacion debe ser > a 0 segundos';
+        msjPrint = 'Time must be greater than 0';
         return
     end
 end
@@ -57,28 +58,28 @@ end
 % numero repeticiones del gesto relajacion
 numRepRelax = str2double(handles.numRepRelaxText.String);
 if ~isnumeric(numRepRelax) || isnan(numRepRelax)
-    msjPrint = 'Ingrese correctamente el numero de repeticiones para el gesto de relajacion!';
+    msjPrint = 'wrong number of relax samples!';
     return
 end
 
 % brazo
 perimetro = str2double(handles.perimetroText.String);
-if ~isnumeric(perimetro) || isnan(perimetro)
-    msjPrint = 'Ingrese correctamente el perimetro del brazo de usuario!';
+if ~isnumeric(perimetro) || isnan(perimetro) || perimetro <= 0
+    msjPrint = 'wrong arm circumference!';
     return
 end
 
 % cubo codo
 cubCodo = str2double(handles.cubCodoText.String);
-if ~isnumeric(cubCodo) || isnan(cubCodo)
-    msjPrint = 'Ingrese correctamente distancia cubito-codo!';
+if ~isnumeric(cubCodo) || isnan(cubCodo)|| cubCodo <= 0
+    msjPrint = 'wrong length';
     return
 end
 
 % myo codo
 codMyo = str2double(handles.codMyoText.String);
-if ~isnumeric(codMyo) || isnan(codMyo)
-    msjPrint = 'Ingrese correctamente distancia codo-Myo!';
+if ~isnumeric(codMyo) || isnan(codMyo)|| codMyo <= 0
+    msjPrint = 'wrong length!';
     return
 end
 

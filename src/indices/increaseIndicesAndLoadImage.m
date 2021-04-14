@@ -30,12 +30,12 @@ if countRepetition >= repXClass(countGesture)
         handles.grabarButton.Enable = 'off';
         
         gestureNext = userData.gestures.classes{countGesture};
-        handles.msjText.String = 'cargando...';
+        handles.msjText.String = 'loading...';
         cla(handles.gestoAxes)
         drawnow
         
-        uiwait(msgbox(['Siguiente gesto: ' upper(gestureNext)],...
-            '¡ATENTO! CAMBIO DE GESTO','help', 'modal'));
+        uiwait(msgbox(['Next gesture: ' upper(gestureNext)],...
+            '¡ATENTION! NEXT GESTURE','help', 'modal'));
         
         % dibujarImagen(handles,gestureNext);
         % initGestureGif(handles, gestureNext);

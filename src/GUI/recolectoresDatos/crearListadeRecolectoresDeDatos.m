@@ -1,6 +1,6 @@
 function [encabezado, listaDeRecolectoresDeDatos, numUsers] =...
     crearListadeRecolectoresDeDatos()
-encabezado = 'SELECCIONE SU NOMBRE:';
+encabezado = 'SELECT YOUR NAME:';
 [num,txt,raw] = xlsread('Investigadores y Ayudantes.xlsx');
 numUsers = size(txt,1) - 1;
 for userNum = 1:numUsers
