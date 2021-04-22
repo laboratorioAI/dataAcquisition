@@ -1,4 +1,4 @@
-%
+%ejecutar is the run script to execute the data acquisition system.
 
 %{
 Laboratorio de Inteligencia y Visión Artificial
