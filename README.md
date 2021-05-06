@@ -26,7 +26,7 @@ The compatible devices have a couple of difference that were taken into account 
 
 ## Channels mapping
 In the following figure there is the mapping of the channels of each device, the yellow block marks the *"logo electrode"*. For compatibility, we rotate the Emg matrix of the gForce Pro to match Myo Armband channel distribution.
-![Device channels mapping](/images/channelsMapping.png)
+![Device channels mapping](./images/channelsMapping.png)
 
 # File structure
 Data recorded for every user is stored in folder **./data/** in ***.mat** format. The software creates a new folder for each user with the given name removing spaces and special characters.

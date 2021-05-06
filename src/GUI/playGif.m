@@ -63,9 +63,9 @@ handles.output = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
-% axes(handles.axes1);
+movegui(hObject,'center'); % mostrando en el centr
 imshow(ones(150,250,3), 'Parent', handles.axes1);
-% axis off;
+
 drawnow;
 
 % --- Outputs from this function are returned to the command line.
@@ -77,7 +77,6 @@ function varargout = playGif_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 varargout{1} = handles.output;
-movegui(hObject,'center'); % mostrando en el centr
 play(hObject, eventdata, handles);
 drawnow
 % --- Executes on button press in replayPushbutton.

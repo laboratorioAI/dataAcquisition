@@ -48,7 +48,7 @@ switch deviceType
         
         % sample.emg = (double(gForceObject.getEmg())'- 127)/128;
         
-        if isempty(sample.emg)
+        if isempty(emgData)
             errorInData = true;
             return;
             % NOTA: el errordlg no funciona con el wait.timer

@@ -52,7 +52,7 @@ userData.extraInfo = extraInfo;
 %% device!
 % type
 global deviceType gForceObject
-extraInfo.DeviceType = char(deviceType);
+deviceInfo.DeviceType = char(deviceType);
 
 % name
 listOfDevices = handles.listOfMyos.String;
@@ -106,7 +106,6 @@ userData.gestures.repXClass = [extraInfo.repetitionsRelax ...
 
 % loop para crear estructuras!
 for idx = 1:length(allGestures)
-    %     userData.gestures.(allGestures{idx}).transiciones = [];
     userData.gestures.(allGestures{idx}).gestureName = allGestures{idx};
     userData.gestures.(allGestures{idx}).data = []; % YA NO crea estructura dependiendo del número de rep del gesto
 end

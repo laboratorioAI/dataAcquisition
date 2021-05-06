@@ -41,8 +41,7 @@ if nargout
 else
     gui_mainfcn(gui_State, varargin{:});
 end
-global currentDirectory
-cd(currentDirectory);
+
 % End initialization code - DO NOT EDIT
 
 

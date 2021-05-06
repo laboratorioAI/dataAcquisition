@@ -22,11 +22,11 @@ handles.perimetroText.String = num2str(userInfo.armPerimeter);
 %% Extra information
 % dice myo, pero es myo y gforce
 extraInfo = userData.extraInfo;
-myoName = extraInfo.deviceName;
+myoName = userData.deviceInfo.deviceName;
 set(handles.listOfMyos,'String',myoName);
 
 global deviceType
-deviceType = userData.extraInfo.DeviceType;
+deviceType = userData.deviceInfo.DeviceType;
 
 handles.timeGestureText.String = num2str(extraInfo.timePerRepetition);
 handles.numRepText.String = num2str(extraInfo.repetitions);

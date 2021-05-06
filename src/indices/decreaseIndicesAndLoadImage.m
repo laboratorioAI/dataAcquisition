@@ -7,7 +7,7 @@ if countRepetition > 1
     % reducing in 1 the repetition
     countRepetition = countRepetition - 1;
     
-else
+elseif countGesture  > 1
     % previous gesture
     
     %-- delete the other gesture
@@ -20,9 +20,9 @@ else
     drawnow
     showGestureGif(handles, gestureName);
     drawnow
-    handles.repetirButton.Enable = 'on';
-    handles.grabarButton.Enable = 'on';
 end
+handles.repetirButton.Enable = 'on';
+handles.grabarButton.Enable = 'on';
 
 %% updating
 userData.counterGesture = countGesture;

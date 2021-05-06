@@ -1,5 +1,6 @@
 function repetirFlag = plotEMGSaved(handles, userData, transicion)
-% returns true when too few samples in the input data
+% returns true when too few samples in the input data.
+% Transition is time in seconds
 
 repetirFlag = false; % default
 global deviceType gForceObject
@@ -12,19 +13,13 @@ timeGesture = userData.extraInfo.timePerRepetition;
 
 
 %% data
+yMin = -1;
+yMax = 1;
 if deviceType == DeviceName.gForce
     freq = gForceObject.emgFreq;
-    yMin = 0;
-    if gForceObject.emgResolution == 8
-    yMax = 255;
-    else
-        yMax = 4095;
-    end
-    
 else
-    freq = 200;
-    yMin = -1;
-    yMax = 1;
+    optionsRecording = recordingConfigs();
+    freq = optionsRecording.myo.emgSamplingRate;
 end
 
 xlimit = timeGesture * freq;
@@ -36,14 +31,13 @@ muestrasAq = length(emgs);
 handles.muestrasText.String = num2str(muestrasAq);
 options = recordingConfigs();
 minSignalLength = options.recording.minSignalLength;
-if muestrasAq < minSignalLength * timeGesture * freq
+if muestrasAq < minSignalLength/100 * timeGesture * freq
     % pocas muestras!
     handles.muestrasText.ForegroundColor = [1 0 0];
     % forzamos a repetir
-    repetirFlag  = true;    
+    repetirFlag  = true;
 else
     % muestras correctas
-    
     handles.muestrasText.ForegroundColor = [0 0 1];
 end
 
@@ -64,32 +58,32 @@ for cidx = 1:8
     eval(cmd);
 end
 
-%% plot quats! only with gforce
-if deviceType == DeviceName.gForce
-    freqQuat= 50;
-    quats = userData.gestures.(gestureName).data{repetition,1}.quaternions;
-    plot(handles.rotAxes, quats)
-    
-    xlim(handles.rotAxes, [1, size(quats, 1)])
-    ylim(handles.rotAxes, [-1 1])
-    hold(handles.rotAxes, 'on')
-    line([transSTR/freq*50 transSTR/freq*50],[-1 1], 'LineWidth', 2 ...
-        ,'Color', [1 0.8043 0],'Parent',handles.rotAxes);
-    
-    legend(handles.rotAxes, 'w', 'x','y','z', 'Location', 'best')
-    handles.rotAxes.XTick = '';
-    % quats!
-    muestrasQ = length(quats);
-    handles.muestrasQuat_txt.String = num2str(muestrasQ);
-    
-    if muestrasQ < 0.9 * timeGesture * freqQuat
-        % pocas muestras!
-        handles.muestrasQuat_txt.ForegroundColor = [1 0 0];
-    else
-        % muestras correctas
-        handles.muestrasQuat_txt.ForegroundColor = [0 0 1];
-    end
-    
+%% plot quats
+optionsRecording = recordingConfigs();
+freqQuat = optionsRecording.quaternionsSamplingRate;
+
+quats = userData.gestures.(gestureName).data{repetition,1}.quaternions;
+plot(handles.rotAxes, quats)
+
+xlim(handles.rotAxes, [1, size(quats, 1)])
+ylim(handles.rotAxes, [-1 1])
+hold(handles.rotAxes, 'on')
+line(transicion*freqQuat*[1 1],[-1 1], 'LineWidth', 2 ...
+    ,'Color', [1 0.8043 0],'Parent',handles.rotAxes);
+
+legend(handles.rotAxes, 'w', 'x','y','z', 'Location', 'best')
+handles.rotAxes.XTick = '';
+% quats!
+muestrasQ = length(quats);
+handles.muestrasQuat_txt.String = num2str(muestrasQ);
+
+if muestrasQ < minSignalLength/100 * timeGesture * freqQuat
+    % pocas muestras!
+    handles.muestrasQuat_txt.ForegroundColor = [1 0 0];
+    repetirFlag  = true;
+else
+    % muestras correctas
+    handles.muestrasQuat_txt.ForegroundColor = [0 0 1];
 end
 end
 
