@@ -33,3 +33,10 @@ options.recording.minStarting = 16; % in percentage. For a 5s rep, means 0.8s
 options.recording.maxStarting = 65; % in percentage. For a 5s rep means at 3.25s
 
 options.recording.fixedStarting = 20; % in percentage. For a 5s rep, means 1s
+
+options.recording.minSignalLength = 90; % in percentage
+
+%% samplings
+options.myo.emgSamplingRate = 200;
+% options.gForce.emgSamplingRate = ; % configurable
+options.quaternionsSamplingRate = 50; % fixed for both devices

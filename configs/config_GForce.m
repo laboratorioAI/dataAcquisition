@@ -35,24 +35,29 @@ Matlab 9.9.0.1538559 (R2020b) Update 3.
 
 %% Input Validation
 arguments
-    configProfile (1, :) char
+    configProfile (1, :) char = 'default';
 end
 
-%%
+%% default values
+% center value must be 128 or 2048 (at 12bits), but...
+options.ref8bits = 118;
+options.ref12bits = 2000;
+
+%% profile
 switch configProfile
-    case 'emgFastLow'        
+    case 'emgFastLow'
         options.emgResolution = 8; % 8 or 12
         options.enabledQuats = true;
         options.emgFreq = 500;
         options.verbose = 0; % 0 no, 1 yes
-      
+        
     case 'onlyEmg'
         options.emgResolution = 8; % 8 or 12
         options.enabledQuats = false;
         options.emgFreq = 1000;
         options.verbose = 0; % 0 no, 1 yes
+    case 'default'
         
     otherwise
         error(['Profile "' configProfile '" not defined'])
-        
 end

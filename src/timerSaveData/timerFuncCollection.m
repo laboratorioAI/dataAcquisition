@@ -9,15 +9,15 @@ repetition = userData.counterRepetition;
 gestureName = userData.gestures.classes{gestureCount};
 
 %% Get data from device
+sample = struct('emg', [], 'gestureDevicePredicted', [], 'quaternions', [], 'gyro', [],...
+    'accel', [], 'pointGestureBegins', []);
+
 switch deviceType
     case DeviceName.myo
         % # ----- Myo
-        sample = struct('emg', [], 'pose_myo', [], 'rot', [], 'gyro', [],...
-            'accel', [], 'pointGestureBegins', []);
-        
         emgs = myoObject.myoData.emg_log;
         sample.emg = emgs;
-        sample.pose_myo = myoObject.myoData.pose_log;
+        sample.gestureDevicePredicted = myoObject.myoData.pose_log;
         
         if isempty(sample.emg)
             errorInData = true;
@@ -25,12 +25,12 @@ switch deviceType
             % errordlg('¡El Myo no está conectado!','¡ERROR DE CONEXIÓN!');
         end
         
-        if any(sample.pose_myo == 65535)
+        if any(sample.gestureDevicePredicted == 65535)
             errorInData = true;
             return;
         end
         
-        sample.rot = myoObject.myoData.rot_log();
+        sample.quaternions = myoObject.myoData.quat_log();% w,x,y,z
         sample.gyro = myoObject.myoData.gyro_log();
         sample.accel =  myoObject.myoData.accel_log();
         
@@ -40,14 +40,14 @@ switch deviceType
         
     case DeviceName.gForce
         % # ----- GForce
-        sample = struct('emg', [], 'quaternions',...
-            [], 'pointGestureBegins', []);
-        % sample.emg = (double(gForceObject.getEmg())'- 127)/128;
         try
-        sample.emg = gForceObject.getEmg()'; %8bits
+            emgData = gForceObject.getEmg(); %8bits
         catch
-            sample.emg = [];
+            emgData = [];
         end
+        
+        % sample.emg = (double(gForceObject.getEmg())'- 127)/128;
+        
         if isempty(sample.emg)
             errorInData = true;
             return;
@@ -56,10 +56,16 @@ switch deviceType
         end
         
         
-        % if gForceObject.enabledPredictions
-        %     sample.pose_myo = gForceObject.getPredictions();
+        % --- emg channels Rotation
+        % to map Myo Armband!
+        emgData = circshift(emgData', 3, 2);
+        emgData = emgRangeConversion(emgData);
+        sample.emg = emgData;
+        
+        % if gForceObject.enabledPredictions. FUTURE!
+        %     sample.gestureDevicePredicted = gForceObject.getPredictions();
         % else
-        %     sample.pose_myo = [];
+        %     sample.gestureDevicePredicted = [];
         % end
         
         if gForceObject.enabledQuats

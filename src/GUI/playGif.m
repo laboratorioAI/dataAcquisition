@@ -96,15 +96,21 @@ delete(gcf);
 
 function play(hObject, eventdata, handles)
 global filename;
-set(handles.gestureName, 'String', upper( filename )); 
+set(handles.gestureName, 'String', upper( filename ));
 axes(handles.axes1);
 % fullname = fullfile('gifs',[filename '.gif']);
-fullname = ['.\gifs\the11Gestures\' filename '.gif'];
+
+options = configs();
+fullname = [options.gifsPath filename '.gif'];
 [gifImage, cmap] = imread(fullname, 'Frames', 'all');
 gifDraw = imshow(gifImage(:,:,:,1));
 colormap(cmap)
 [rows, columns, numColorChannels, numImages] = size(gifImage);
 drawnow
+
+gifinfo = imfinfo(fullname);
+% the delayTime is in hundreds of second
+gifPeriod = mean([gifinfo.DelayTime])/100;
 % Despliega el gif en forma de video
 for k = 1 : numImages
     try
@@ -114,12 +120,17 @@ for k = 1 : numImages
     catch
         break;
     end
+    a = tic;
     gifDraw.CData = gifImage(:,:,:,k);
     
-%     thisFrame = gifImage(:,:,:,k);
-%     thisRGB = uint8(255 * ind2rgb(thisFrame, cmap));
-%        thisRGB = image(ind2rgb(thisFrame, cmap));
-%     imshow(thisRGB);
-    drawnow;
+    %     thisFrame = gifImage(:,:,:,k);
+    %     thisRGB = uint8(255 * ind2rgb(thisFrame, cmap));
+    %        thisRGB = image(ind2rgb(thisFrame, cmap));
+    %     imshow(thisRGB);
+    while toc(a) < gifPeriod
+        drawnow;
+    end
 end
+
+
 

@@ -1,9 +1,18 @@
 function userData = getUserDataFromHandles(handles)
 % se creo el userData a partir de la interfaz, y de datos default!
 
-%% Clear spaces Username
+%% Username
 tmpUserName = handles.nameUserText.String;
+
+% clear whitespaces
 tmpUserName(tmpUserName == ' ') = [];
+
+% removing ñs, tildes, etc
+options = configs();
+for i = options.replaces
+    tmpUserName = strrep(tmpUserName, i{1},i{2});
+end
+
 
 %% User info
 userInfo.username = tmpUserName;
@@ -22,11 +31,6 @@ userInfo.armPerimeter = str2double(handles.perimetroText.String);
 userData.userInfo = userInfo;
 
 %% Extra information
-listOfMyos = handles.listOfMyos.String;
-myoNum = handles.listOfMyos.Value;
-% extraInfo.myoName = listOfMyos{myoNum};
-extraInfo.deviceName = listOfMyos{myoNum};
-
 extraInfo.date = datetime;
 extraInfo.timePerRepetition = str2double(handles.timeGestureText.String);
 extraInfo.repetitions = str2double(handles.numRepText.String);
@@ -38,13 +42,34 @@ options = syncConfigs();
 extraInfo.timePerSyncRepetition = options.timeGestureSync;
 extraInfo.syncRepetitions = options.numOfRepetitions;
 
+% -- software version
+options = configs();
+extraInfo.softwareVersion = options.version;
 
-%%
-global deviceType
-extraInfo.DeviceType = deviceType;
-
+%
 userData.extraInfo = extraInfo;
 
+%% device!
+% type
+global deviceType gForceObject
+extraInfo.DeviceType = char(deviceType);
+
+% name
+listOfDevices = handles.listOfMyos.String;
+myoNum = handles.listOfMyos.Value;
+% extraInfo.myoName = listOfMyos{myoNum};
+deviceInfo.deviceName = listOfDevices{myoNum};
+
+% sampling frequency!
+optionsRecording = recordingConfigs();
+if deviceType == DeviceName.myo
+    deviceInfo.emgSamplingRate = optionsRecording.myo.emgSamplingRate;
+else
+    deviceInfo.emgSamplingRate = gForceObject.emgFreq;
+end
+
+% --
+userData.deviceInfo = deviceInfo;
 %% shuffling
 % allGestures
 relax = {'relax'}; % default!

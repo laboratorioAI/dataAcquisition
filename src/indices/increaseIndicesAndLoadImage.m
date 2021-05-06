@@ -32,6 +32,8 @@ if countRepetition >= repXClass(countGesture)
         gestureNext = userData.gestures.classes{countGesture};
         handles.msjText.String = 'loading...';
         cla(handles.gestoAxes)
+        
+        updateBattery(handles); % showing new battery
         drawnow
         
         uiwait(msgbox(['Next gesture: ' upper(gestureNext)],...

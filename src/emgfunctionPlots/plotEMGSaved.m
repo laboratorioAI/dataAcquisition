@@ -15,7 +15,11 @@ timeGesture = userData.extraInfo.timePerRepetition;
 if deviceType == DeviceName.gForce
     freq = gForceObject.emgFreq;
     yMin = 0;
+    if gForceObject.emgResolution == 8
     yMax = 255;
+    else
+        yMax = 4095;
+    end
     
 else
     freq = 200;
@@ -30,8 +34,9 @@ transSTR = transicion * freq;
 %% textos emg
 muestrasAq = length(emgs);
 handles.muestrasText.String = num2str(muestrasAq);
-
-if muestrasAq < 0.9 * timeGesture * freq
+options = recordingConfigs();
+minSignalLength = options.recording.minSignalLength;
+if muestrasAq < minSignalLength * timeGesture * freq
     % pocas muestras!
     handles.muestrasText.ForegroundColor = [1 0 0];
     % forzamos a repetir

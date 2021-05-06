@@ -39,3 +39,5 @@ options.numOfRepetitions = 5;
 options.deadTime = 2; % waiting time before msg
 options.windowTime = 3; % last possible initial time
 
+% hence max time gesture 8seg
+% min tam 5

@@ -1,7 +1,7 @@
 function transitionTime  = getStartingTime(nameGesture, timeRep)
 %getStartingTime() returns the time (in seconds) to start the recording
 %depending on the name of the gesture. The old gestures have a random
-%initial time, the new gestures all starts at time 1.
+%initial time, the new gestures all starts at time a fixed time.
 %
 % Inputs
 %   nameGesture        -char with the name of the gesture

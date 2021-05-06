@@ -36,7 +36,12 @@ axes(handles.escudoAxes);
 imshow(imgEscudo);
 handles.escudoAxes.Color = 'none';
 axis off;
+
+% version
+options = configs();
+handles.txt_version.String = sprintf('ver: %s', options.version);
 drawnow;
+
 
 function varargout = entrenamiento_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
@@ -176,7 +181,8 @@ if isDataValid
     countGesture = 1; % muestro el primer gesto
     firstGesture = userData.gestures.classes{1};
     repXClass = userData.gestures.repXClass;
-    handles.repeticionesText.String = [num2str(userData.counterRepetition) '/' num2str(repXClass(countGesture))];
+    handles.repeticionesText.String = [num2str(...
+        userData.counterRepetition) '/' num2str(repXClass(countGesture))];
     
     handles.tituloGestoText.String = firstGesture;
     
@@ -188,6 +194,7 @@ if isDataValid
     if isRelease
         %-% Recolectar datos de sincronización
         handles.msjText.String = 'Waiting sync recordings!';
+        waitfor(playGif('sync')) % sync tutorial!
         uiwait(sincronizacion); % debe terminar correctamente, si no muere!
         str = 'Resuming data acquisition.';
         uiwait(msgbox(str, 'Information','help'));
@@ -234,7 +241,7 @@ uiwait(warndlg({'GForce Pro connection is still in beta.', ...
     '', 'It is recommended to use the device when it is fully charged.'},...
     'WARNING', 'modal'));
 
-global deviceType gForceObject
+global deviceType
 handles.msjText.String = {'Connecting with GForce.', ...
     'This can take several minutes.', ...
     'Please wait...'};
@@ -252,22 +259,7 @@ if isConnectedG
     deviceType = DeviceName.gForce;
     ledConexion(handles, true);
     
-    %-% battery
-    bat = gForceObject.getBattery();
-    gForceObject.vibrate();
-    drawnow
-    handles.bat_txt.String = sprintf('%d %%',bat);
-    
-    if bat >= 80
-        handles.bat_txt.ForegroundColor = [0.39 0.83 0.07];
-    elseif bat > 60
-        handles.bat_txt.ForegroundColor = [0.93 0.69 0.13];
-    elseif bat > 0
-        handles.bat_txt.ForegroundColor = 'red';
-    else
-        handles.bat_txt.ForegroundColor = 'black';
-    end
-    
+    updateBattery(handles);
     
     %-% parámetros de inicio!
     handles.msjText.String = 'Fill the user info and press START!';
@@ -585,7 +577,8 @@ function syncGesture_Callback(hObject, eventdata, handles)
 % hObject    handle to syncGesture (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-playGif('waveOut');
+% playGif('waveOut');
+playGif('sync');
 
 % --------------------------------------------------------------------
 function relaxGesture_Callback(hObject, eventdata, handles)

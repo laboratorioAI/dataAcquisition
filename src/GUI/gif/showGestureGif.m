@@ -29,7 +29,8 @@ Matlab 9.9.0.1538559 (R2020b) Update 3.
 handles.msjText.String = 'Watch carefully the gif.';
 
 %% config
-gifName = ['.\gifs\the11Gestures\' gestureName '.gif'];
+options = configs();
+gifName = [options.gifsPath gestureName '.gif'];
 
 [gif, cmap] = imread(gifName, 'Frames', 'all');
 numFrames = size(gif, 4); % only 4th dim
@@ -63,7 +64,9 @@ for i = 1:options.numberOfGifRepetitions
 end
 
 %% image
-imgName = ['.\images\' gestureName '.jpg'];
+options = configs();
+
+imgName = [options.imgFolder gestureName '.jpg'];
 
 [img, cmap] = imread(imgName);
 

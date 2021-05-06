@@ -34,7 +34,8 @@ if ~isempty(t1)
     delete(t1)
 end
 %% config
-gifName = ['.\gifs\the11Gestures\' gestureName '.gif'];
+options = configs();
+gifName = [options.gifsPath gestureName '.gif'];
 
 [gifImage, cmap] = imread(gifName, 'Frames', 'all');
 numImages = size(gifImage, 4); % only 4th dim
