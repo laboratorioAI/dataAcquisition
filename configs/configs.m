@@ -27,12 +27,13 @@ Matlab 9.9.0.1592791 (R2020b) Update 5.
 
 
 %%  software
-options.version = '1.202';
+options.version = '1.203';
 
 
 %% paths
 options.gifsPath = '.\gifs\the11Gestures\';
 options.imgFolder = '.\images\';
+
 %% username changes
 % letters to replace to avoid any character encoding conflict
 % optimised for spanish!

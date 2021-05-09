@@ -2,11 +2,20 @@ function timerFuncCollection(~, ~)
 %% Stop myo streaming
 global myoObject userData deviceType gForceObject;
 global errorInData;
+global isSync repetitionNum gestureNameSync; % vars to unify with sync
 
-gestureCount = userData.counterGesture;
-repetition = userData.counterRepetition;
+ % checking if the fnction is for sync or not
+if isempty(isSync) || ~isSync
+    % not sync, normal gestures
+    gestureCount = userData.counterGesture;
+    repetition = userData.counterRepetition;
 
-gestureName = userData.gestures.classes{gestureCount};
+    gestureName = userData.gestures.classes{gestureCount};
+else
+    % sync
+    repetition = repetitionNum;
+    gestureName = gestureNameSync;
+end
 
 %% Get data from device
 sample = struct('emg', [], 'gestureDevicePredicted', [], 'quaternions', [], 'gyro', [],...

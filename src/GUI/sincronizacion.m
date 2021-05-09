@@ -108,7 +108,7 @@ function recordPushbutton_Callback(hObject, eventdata, handles)
 % hObject    handle to recordPushbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global userData numOfRepetitions repetitionNum timeToStartRecording;
+global userData numOfRepetitions repetitionNum;
 % userData = loadUserData(userData); % ya no leemos pues todo se graba en
 % userData, y no se puede restaurar el proceso
 options = syncConfigs();
@@ -119,7 +119,7 @@ handles.replayPushbutton.Enable = 'off';
 %-% Iniciar los timers
 %2 + 3*rand;
 timeToStartRecording = options.deadTime + options.windowTime*rand;
-
+userData.lastTransitionTime = timeToStartRecording;
 timerWaitbar = timerWaitbarSync(handles, timeToStartRecording);
 start(timerWaitbar);
 
@@ -136,7 +136,6 @@ delete(timerEMGRecording);
 drawnow;
 
 %-% Graficar la señal EMG
-userData.lastTransitionTime = timeToStartRecording;
 plotEMGSync(handles, userData, timeToStartRecording);
 drawnow;
 
@@ -188,6 +187,8 @@ if repetitionNum <= numOfRepetitions && isRelease
     str{2} = 'Please, complete the samples!';
     msgbox(str,'WARNING','warn');
 else
+    clearvars -global -except myoObject deviceType gForceObject ...
+        userData isRelease;
     userData.counterGesture = 1;
     drawnow
     delete(gcf);
@@ -276,78 +277,80 @@ drawnow;
 
 function myTimer = timerCollectionSync()
 %%
-global timeGestureSync;
+global timeGestureSync isSync;
+isSync = true;
 %-% Single shot timer
 myTimer = timer('Name', 'Sync Timer');
 myTimer.StartFcn = @timerStartCollection;
-myTimer.TimerFcn = @timerFuncCollectionSync;
+myTimer.TimerFcn = @timerFuncCollection;
 myTimer.StopFcn = @timerStartCollection;
 myTimer.StartDelay = timeGestureSync;
 
-function timerFuncCollectionSync(~, ~)
-%% Stop myo streaming
-global myoObject userData gestureNameSync timeToStartRecording ...
-    repetitionNum deviceType gForceObject;
-
-%--
-switch deviceType
-    
-    case DeviceName.myo
-        % # ----- Myo
-        sample = struct('emg', [], 'pose_myo', [], 'rot', [], 'gyro', [],...
-            'accel', [], 'pointGestureBegins', []);
-        
-        emgs = myoObject.myoData.emg_log;
-        sample.emg = emgs;
-        sample.pose_myo = myoObject.myoData.pose_log;
-        
-        if isempty(sample.emg)
-            errordlg('Myo armband not connected!','CONNECTION ERROR!');
-        end
-        
-        if any(sample.pose_myo == 65535)
-            errordlg('Myo Armband hand gesture recognition not working',...
-                '¡RECOGNITION ERROR (65535)!');
-        end
-        
-        sample.rot = myoObject.myoData.rot_log();
-        sample.gyro = myoObject.myoData.gyro_log();
-        sample.accel =  myoObject.myoData.accel_log();
-        
-        if ~isequal(gestureNameSync, 'relax')
-            sample.pointGestureBegins = round(timeToStartRecording*200);
-        end
-        
-    case DeviceName.gForce
-        % # ----- GForce
-        sample = struct('emg', [], 'quaternions',...
-            [], 'pointGestureBegins', []);
-        % sample.emg = (double(gForceObject.getEmg())'- 127)/128;
-        sample.emg = gForceObject.getEmg()'; %8bits
-        if isempty(sample.emg)
-            errordlg('¡GForce not connected!','CONNECTION ERROR!');
-        end
-        
-        
-        % if gForceObject.enabledPredictions
-        %     sample.pose_myo = gForceObject.getPredictions();
-        % else
-        %     sample.pose_myo = [];
-        % end
-        
-        if gForceObject.enabledQuats
-            sample.quaternions = gForceObject.getOrientation()'; % (4-by-m)'
-        else
-            sample.quaternions = [];
-        end
-        
-        if ~isequal(gestureNameSync, 'relax')
-            sample.pointGestureBegins = round(...
-                timeToStartRecording*gForceObject.emgFreq);
-        end
-end
-%-% Update sample
-userData.gestures.(gestureNameSync).data{repetitionNum,1} = sample;
+% not used anymore!!
+% function timerFuncCollectionSync(~, ~)
+% %% Stop myo streaming
+% global myoObject userData gestureNameSync timeToStartRecording ...
+%     repetitionNum deviceType gForceObject;
+% 
+% %--
+% switch deviceType
+%     
+%     case DeviceName.myo
+%         % # ----- Myo
+%         sample = struct('emg', [], 'pose_myo', [], 'rot', [], 'gyro', [],...
+%             'accel', [], 'pointGestureBegins', []);
+%         
+%         emgs = myoObject.myoData.emg_log;
+%         sample.emg = emgs;
+%         sample.pose_myo = myoObject.myoData.pose_log;
+%         
+%         if isempty(sample.emg)
+%             errordlg('Myo armband not connected!','CONNECTION ERROR!');
+%         end
+%         
+%         if any(sample.pose_myo == 65535)
+%             errordlg('Myo Armband hand gesture recognition not working',...
+%                 '¡RECOGNITION ERROR (65535)!');
+%         end
+%         
+%         sample.rot = myoObject.myoData.rot_log();
+%         sample.gyro = myoObject.myoData.gyro_log();
+%         sample.accel =  myoObject.myoData.accel_log();
+%         
+%         if ~isequal(gestureNameSync, 'relax')
+%             sample.pointGestureBegins = round(timeToStartRecording*200);
+%         end
+%         
+%     case DeviceName.gForce
+%         % # ----- GForce
+%         sample = struct('emg', [], 'quaternions',...
+%             [], 'pointGestureBegins', []);
+%         % sample.emg = (double(gForceObject.getEmg())'- 127)/128;
+%         sample.emg = gForceObject.getEmg()'; %8bits
+%         if isempty(sample.emg)
+%             errordlg('¡GForce not connected!','CONNECTION ERROR!');
+%         end
+%         
+%         
+%         % if gForceObject.enabledPredictions
+%         %     sample.pose_myo = gForceObject.getPredictions();
+%         % else
+%         %     sample.pose_myo = [];
+%         % end
+%         
+%         if gForceObject.enabledQuats
+%             sample.quaternions = gForceObject.getOrientation()'; % (4-by-m)'
+%         else
+%             sample.quaternions = [];
+%         end
+%         
+%         if ~isequal(gestureNameSync, 'relax')
+%             sample.pointGestureBegins = round(...
+%                 timeToStartRecording*gForceObject.emgFreq);
+%         end
+% end
+% %-% Update sample
+% userData.gestures.(gestureNameSync).data{repetitionNum,1} = sample;
 
 function plotEMGSync(handles, userData, transicion)
 %%
