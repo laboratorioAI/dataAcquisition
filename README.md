@@ -8,6 +8,13 @@ The data recollected in this interface is fully compatible with [Manual Segmenta
 Go to the repository root folder and just execute the script *ejecutar.m* in matlab.
 
 # Requirements
+
+## Myo
+Using the Myo Armband has an easier installation procedure. 
+Check the [MyoMex repository](https://github.com/mark-toma/MyoMex) for the tutorial installation.
+We have included in this repository a copy of MyoMex.
+
+## Gforce
 The **gForce_mex** function must be compiled and added to the path. If you receive an error about it, check the gForce_interface project for help.
 ## Including Gforce in the proyect
 Be sure to have correctly install gForce Mex. Check the [Installation Guide](https://github.com/laboratorioAI/gForce_interface)

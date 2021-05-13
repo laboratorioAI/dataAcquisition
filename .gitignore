@@ -1,13 +1,33 @@
 # List of untracked files to ignore
-.gitignore
-.gitattributes
+temp/
+
+data/*/
+
+# -------- Matlab template
+.git/
+# project things
+*.prj
+resources/
 
 # Windows default autosave extension
 *.asv
 
-resources/
+# Packaged app and toolbox files
+*.mlappinstall
+*.mltbx
 
-*.prj
-.git/
+# Generated helpsearch folders
+helpsearch*/
 
-temp/
+# Simulink code generation folders
+slprj/
+sccprj/
+
+# Matlab code generation folders
+codegen/
+
+# Simulink autosave extension
+*.autosave
+
+# Simulink cache files
+*.slxc

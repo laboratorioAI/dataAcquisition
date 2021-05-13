@@ -291,36 +291,36 @@ myTimer.StartDelay = timeGestureSync;
 % %% Stop myo streaming
 % global myoObject userData gestureNameSync timeToStartRecording ...
 %     repetitionNum deviceType gForceObject;
-% 
+%
 % %--
 % switch deviceType
-%     
+%
 %     case DeviceName.myo
 %         % # ----- Myo
 %         sample = struct('emg', [], 'pose_myo', [], 'rot', [], 'gyro', [],...
 %             'accel', [], 'pointGestureBegins', []);
-%         
+%
 %         emgs = myoObject.myoData.emg_log;
 %         sample.emg = emgs;
 %         sample.pose_myo = myoObject.myoData.pose_log;
-%         
+%
 %         if isempty(sample.emg)
 %             errordlg('Myo armband not connected!','CONNECTION ERROR!');
 %         end
-%         
+%
 %         if any(sample.pose_myo == 65535)
 %             errordlg('Myo Armband hand gesture recognition not working',...
 %                 '¡RECOGNITION ERROR (65535)!');
 %         end
-%         
+%
 %         sample.rot = myoObject.myoData.rot_log();
 %         sample.gyro = myoObject.myoData.gyro_log();
 %         sample.accel =  myoObject.myoData.accel_log();
-%         
+%
 %         if ~isequal(gestureNameSync, 'relax')
 %             sample.pointGestureBegins = round(timeToStartRecording*200);
 %         end
-%         
+%
 %     case DeviceName.gForce
 %         % # ----- GForce
 %         sample = struct('emg', [], 'quaternions',...
@@ -330,20 +330,20 @@ myTimer.StartDelay = timeGestureSync;
 %         if isempty(sample.emg)
 %             errordlg('¡GForce not connected!','CONNECTION ERROR!');
 %         end
-%         
-%         
+%
+%
 %         % if gForceObject.enabledPredictions
 %         %     sample.pose_myo = gForceObject.getPredictions();
 %         % else
 %         %     sample.pose_myo = [];
 %         % end
-%         
+%
 %         if gForceObject.enabledQuats
 %             sample.quaternions = gForceObject.getOrientation()'; % (4-by-m)'
 %         else
 %             sample.quaternions = [];
 %         end
-%         
+%
 %         if ~isequal(gestureNameSync, 'relax')
 %             sample.pointGestureBegins = round(...
 %                 timeToStartRecording*gForceObject.emgFreq);
@@ -360,25 +360,27 @@ global gestureNameSync timeGestureSync repetitionNum ...
 %---% current
 emgs = userData.gestures.(gestureNameSync).data{repetitionNum,1}.emg;
 
+yMin = -1;
+yMax = 1;
+
 if deviceType == DeviceName.gForce
     freq = gForceObject.emgFreq;
-    yMin = 0;
-    yMax = 255;
 else
-    freq = 200;
-    yMin = -1;
-    yMax = 1;
+    optionsRecording = recordingConfigs();
+    freq = optionsRecording.myo.emgSamplingRate;
 end
 
 xlimit = timeGestureSync * freq;
 
-transSTR = round( transicion * freq);
+transSTR = round(transicion * freq);
 
 %-% textos
 muestrasAq = length(emgs);
 handles.numPointsText.String = num2str(muestrasAq);
 
-if muestrasAq < 0.9 * timeGestureSync * freq
+options = recordingConfigs();
+minSignalLength = options.recording.minSignalLength;
+if muestrasAq < minSignalLength/100 * timeGestureSync * freq
     handles.numPointsText.ForegroundColor = [1 0 0];
 else
     handles.numPointsText.ForegroundColor = [0 0 1];
