@@ -7,10 +7,10 @@ myTimer.ExecutionMode = 'fixedRate'; %fixedSpacing
 myTimer.Period = 0.1;
 
 %
-numExecutions = floor(timeGesture / 0.1); % depende del tiempo del gesto 
+numExecutions = floor(timeGesture / 0.1); % depende del tiempo del gesto
 myTimer.TasksToExecute = numExecutions;
 
 
-myTimer.TimerFcn = @(timer, evnt)moverWaitbar(handles,timer.TasksExecuted/numExecutions,transicion/timeGesture);
-
+myTimer.TimerFcn = @(timer, evnt)moverWaitbar(handles,...
+    timer.TasksExecuted/numExecutions,transicion/timeGesture);
 end

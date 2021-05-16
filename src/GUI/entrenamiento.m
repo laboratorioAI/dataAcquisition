@@ -66,6 +66,7 @@ transitionTime = getStartingTime(nameGesture, timeRep);
 
 myWaitbarTimer = timerWaitbar(handles, transitionTime, userData);
 userData.lastTransitionTime = transitionTime;
+drawnow
 start(myWaitbarTimer);
 drawnow
 
@@ -100,14 +101,16 @@ drawnow;
 moverWaitbar(handles, 0, 0);
 
 if errorInData
-    uiwait(errordlg('No data received!', 'ERROR!', 'modal'));
-    msgbox({'Try recording again.',...
-        '',...
-        'If the error keeps appearing:',...
-        '   1. Restart the device',...
-        '   2. Check the battery',...
-        '   3. Unplug and plug the dongle USB',...
-        '   4. Restart matlab'},'Connection','help', 'modal')
+    uiwait(errordlg({'No data received!'
+    ''
+    'Try recording again.'
+    ''
+    'If the error keeps appearing, try any of the following:'
+    '   1. Restart the device'
+    '   2. Check the battery'
+    '   3. Unplug and plug the dongle USB'
+    '   4. Restart matlab'}, 'ERROR!', 'modal'));
+
     handles.repetirButton.Enable = 'on';
     handles.grabarButton.Enable = 'off';
     drawnow
@@ -133,7 +136,11 @@ end
 
 if repetirFlag
     % debe repetir
-    uiwait(warndlg('Few data received, please record again.', ...
+    uiwait(warndlg({'Few data received, please record again.' ...
+        'Possible reasons are:'...
+        '    1. Low battery,'...
+        '    2. More than 1 devices trying to connect.'...
+        'In the case this error persists, please restart the system.'}, ...
         'Transmission error', 'modal'));
     
     handles.repetirButton.Enable = 'on';
@@ -161,7 +168,7 @@ if isDataValid
     userData = getUserDataFromHandles(handles);
     
     %-% Start counters
-    userData.counterGesture = 0; % debido al infame sync gesture
+    userData.counterGesture = 0; % debido al sync gesture
     userData.counterRepetition = 1;
     
     %-% Recolector de datos
@@ -237,7 +244,7 @@ function connectGForce_Button_Callback(hObject, eventdata, handles)
 % -------------------------------------------------------------------------
 % Warning!
 uiwait(warndlg({'GForce Pro connection is still in beta.', ...
-    '¡Be cautious!', 'It is possible that the connection is interrupted.', ...
+    '¡Be cautious!', 'It is possible that the system crushes.', ...
     '', 'It is recommended to use the device when it is fully charged.'},...
     'WARNING', 'modal'));
 
@@ -273,7 +280,7 @@ if isConnectedG
     %-% devices
     handles.listOfMyos.String = devices(deviceType);
 else
-    handles.msjText.String = '¡No se pudo conectar GForce con Matlab!';
+    handles.msjText.String = 'Can not connect to gForce!';
     ledConexion(handles, false);
     handles.empezarEntrenamientoButton.Enable = 'off';
     handles.restaurarButton.Enable = 'off';
@@ -291,7 +298,7 @@ global deviceType
 handles.msjText.String = 'CONNECTING, please, wait...';
 % isConnectedMyo = connectFakeMyo();
 isConnectedMyo = connectMyo();
-
+drawnow
 if isConnectedMyo
     deviceType = DeviceName.myo;
     ledConexion(handles, true);
@@ -309,7 +316,7 @@ if isConnectedMyo
     %-% devices
     handles.listOfMyos.String = devices(deviceType);
 else
-    handles.msjText.String = '¡Connect the Myo with Matlab';
+    handles.msjText.String = 'Could not connect Myo with Matlab';
     ledConexion(handles, false);
     handles.empezarEntrenamientoButton.Enable = 'off';
     handles.restaurarButton.Enable = 'off';
@@ -391,7 +398,7 @@ handles.msjText.String = {'Waiting to resume from restauration point'
     'Please, wait...'};
 drawnow
 uiwait(restaurar); % busca usuario y actualiza punto de grabado!
-
+drawnow
 if isValidRestaurar
     setUserDataFromRestauration(handles,userData);
     
@@ -657,9 +664,8 @@ str = {'CONTACT INFORMATION'
     'Subject: HGR - Data acquistion Software'
     ''
     'Email address:'
-    'marco.benalcazar@epn.edu.ec'
-    'lorena.barona@epn.edu.ec'
-    'angel.valdivieso@epn.edu.ec'
+    'LABORATORIO DE INVESTIGACION EN INTELIGENCIA Y VISION ARTIFICIAL'
+    'laboratorio.ia@epn.edu.ec'    
     ''
     'With the screenshot of the error.'
     'Thank you.'};

@@ -33,7 +33,7 @@ if countRepetition >= repXClass(countGesture)
         handles.msjText.String = 'loading...';
         cla(handles.gestoAxes)
         
-        updateBattery(handles); % showing new battery
+        updateBattery(handles); % showing new battery, only gForce
         drawnow
         
         uiwait(msgbox(['Next gesture: ' upper(gestureNext)],...

@@ -37,14 +37,6 @@ currentDirectory = pathname(1:(n-1));
 cleaningTimers();
 
 
-%% Checking that gForce_mex is added to the path
-switch exist('gForce_mex', 'file')
-    case 3
-        disp('Mex function correctly found!')
-    otherwise
-        error('Mex function "gForce_mex" not found. Check that it is compiled and added to the path.')
-end
-
 %% Start data acquisition
 listaRecolectoresDatos();
 cleaningTimers();

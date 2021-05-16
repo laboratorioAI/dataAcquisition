@@ -1,25 +1,26 @@
 function timerFuncCollection(~, ~)
 %% Stop myo streaming
 global myoObject userData deviceType gForceObject;
-global errorInData;
-global isSync repetitionNum gestureNameSync; % vars to unify with sync
+global errorInData errorType;
+% vars to unify with sync
+global repetitionNum gestureNameSync;
 
+gestureCount = userData.counterGesture;
  % checking if the fnction is for sync or not
-if isempty(isSync) || ~isSync
+if gestureCount > 0
     % not sync, normal gestures
-    gestureCount = userData.counterGesture;
     repetition = userData.counterRepetition;
 
     gestureName = userData.gestures.classes{gestureCount};
 else
-    % sync
+    % sync, when gestureCount is 0
     repetition = repetitionNum;
     gestureName = gestureNameSync;
 end
 
 %% Get data from device
-sample = struct('emg', [], 'gestureDevicePredicted', [], 'quaternions', [], 'gyro', [],...
-    'accel', [], 'pointGestureBegins', []);
+sample = struct('emg', [], 'gestureDevicePredicted', [], 'quaternions',...
+    [], 'gyro', [],'accel', [], 'pointGestureBegins', []);
 
 switch deviceType
     case DeviceName.myo
@@ -30,12 +31,14 @@ switch deviceType
         
         if isempty(sample.emg)
             errorInData = true;
+            errorType = 'noData';
             return;
             % errordlg('¡El Myo no está conectado!','¡ERROR DE CONEXIÓN!');
         end
         
         if any(sample.gestureDevicePredicted == 65535)
             errorInData = true;
+            errorType = '65535';
             return;
         end
         
@@ -59,6 +62,7 @@ switch deviceType
         
         if isempty(emgData)
             errorInData = true;
+            errorType = 'noData';
             return;
             % NOTA: el errordlg no funciona con el wait.timer
             % errordlg('¡GForce no está conectado!','¡ERROR DE CONEXIÓN!');
@@ -94,4 +98,5 @@ end
 userData.gestures.(gestureName).data{repetition,1} = sample;
 
 errorInData = false;
+errorType = [];
 end

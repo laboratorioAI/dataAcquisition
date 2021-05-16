@@ -63,3 +63,4 @@ After finishing the recordings in this interface, to carry on with the manual se
 If you use this Data Acquisition System, please refer and cite the following paper:
 
 [J. Zea, M. Benalcázar, L. Barona. L. Valdivieso, 2021, *"An Open-Source Data Acquisition and Manual Segmentation System for Hand Gesture Recognition based on Emg"*.](https://github.com/laboratorioAI/dataAcquisition)
+<!-- TODO: Change cite to corresponding publication -->

@@ -28,6 +28,15 @@ Ahora solo lo sabe dios.
 Matlab 9.9.0.1538559 (R2020b) Update 3.
 %}
 
+%% Checking that gForce_mex is added to the path
+switch exist('gForce_mex', 'file')
+    case 3
+        disp('Mex function correctly found!')
+    otherwise
+        warning('Mex function "gForce_mex" not found. Check that it is compiled and added to the path.')
+        isConnectedGForce = false;
+        return
+end
 %%
 global gForceObject
 

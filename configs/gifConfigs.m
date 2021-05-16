@@ -25,7 +25,8 @@ Matlab 9.9.0.1592791 (R2020b) Update 5.
 %%
 % the number of times the gif will be repeted before continuing with the
 % acquisition
-options.numberOfGifRepetitions = 2; 
+options.numberOfGifRepetitions = 2;
+% options.numberOfGifRepetitions = 0;
 
 % seconds that each frame of the gif is displayed
 % NOT USED, gif delay is used instead

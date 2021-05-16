@@ -135,6 +135,39 @@ delete(timerWaitbar);
 delete(timerEMGRecording);
 drawnow;
 
+% reseting waitbar
+moverWaitbarSync(handles, 0, 0);
+
+%-% Handling errors
+% In the case an error with myo
+global errorInData myoErrorType
+if errorInData
+    switch myoErrorType
+        case '65535'
+            uiwait(warndlg({'Myo device not synced!'
+                ''
+                'Please, synchronize the device performing a steady waveOut.'
+                'Record again.'}, 'Not synced!', 'modal'));
+            
+        otherwise
+            % empty emg, or gForce error?
+            uiwait(errordlg({'No data received!'
+                ''
+                'Try recording again.'
+                ''
+                'If the error keeps appearing, try any of the following:'
+                '   1. Restart the device'
+                '   2. Check the battery'
+                '   3. Unplug and plug the dongle USB'
+                '   4. Restart matlab'}, 'ERROR!', 'modal'));
+    end
+    
+    handles.recordPushbutton.Enable = 'off';
+    handles.replayPushbutton.Enable = 'on';
+    drawnow
+    return;
+end
+
 %-% Graficar la señal EMG
 plotEMGSync(handles, userData, timeToStartRecording);
 drawnow;
@@ -143,8 +176,6 @@ drawnow;
 saveUserData(); % aw graba en el archivo principal userData
 drawnow;
 
-%-% Reiniciar el waitbar!
-moverWaitbarSync(handles, 0, 0);
 repetitionNum = repetitionNum + 1;
 if repetitionNum > numOfRepetitions
     % the end
@@ -183,8 +214,9 @@ function figure1_CloseRequestFcn(hObject, eventdata, handles)
 global numOfRepetitions repetitionNum isRelease;
 global userData
 if repetitionNum <= numOfRepetitions && isRelease
-    str{1} = 'Can"t leave this interface.';
-    str{2} = 'Please, complete the samples!';
+    str = {'Can"t leave this interface.'
+        'Please, complete the samples!'
+        'In the case of an error, sadly, Matlab must be restarted!'};
     msgbox(str,'WARNING','warn');
 else
     clearvars -global -except myoObject deviceType gForceObject ...
@@ -277,8 +309,8 @@ drawnow;
 
 function myTimer = timerCollectionSync()
 %%
-global timeGestureSync isSync;
-isSync = true;
+global timeGestureSync
+
 %-% Single shot timer
 myTimer = timer('Name', 'Sync Timer');
 myTimer.StartFcn = @timerStartCollection;

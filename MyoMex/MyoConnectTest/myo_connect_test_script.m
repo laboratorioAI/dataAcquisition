@@ -9,15 +9,15 @@ eval(cmd)
 
 %%
 disp('One Myo: (A)');
-myo_connect_test
+% myo_connect_test
 
 %%
 disp('Two Myo: (A) and (B)');
-myo_connect_test
+% myo_connect_test
 
 %%
 disp('One Myo: (A)');
-myo_connect_test
+% myo_connect_test
 
 
 

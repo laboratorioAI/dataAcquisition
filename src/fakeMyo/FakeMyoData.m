@@ -3,6 +3,9 @@ classdef FakeMyoData < handle
         emg_log
         pose_log
         rot_log
+        quat_log
+        gyro_log
+        accel_log
         isStreaming
     end
 
@@ -17,7 +20,11 @@ classdef FakeMyoData < handle
             %% Inital data for logs
             myoData.emg_log = rand(400,8);
             myoData.pose_log = rand(20,1);
-            myoData.rot_log = rand(400,8);
+            myoData.rot_log = rand(400,9);
+            myoData.quat_log = rand(400,4);
+            myoData.accel_log = rand(400,3);
+            myoData.gyro_log = rand(400,3);
+            
             %% Initialize timmers
             %% EMG timer
             myoData.timerEmg = timer;
@@ -46,8 +53,11 @@ classdef FakeMyoData < handle
             myoData.pose_log = [ myoData.pose_log; ceil(rand(1,1)*6) ];
         end
         
-        function updateRot(myoData)
-            myoData.rot_log = [ myoData.rot_log; rand(50, 8) ];
+        function updateRot(myoData)% updating all, instead
+            myoData.rot_log = [ myoData.rot_log; rand(50, 9) ];
+            myoData.accel_log = [ myoData.accel_log; rand(50, 3) ];
+            myoData.quat_log = [ myoData.quat_log; rand(50, 4) ];
+            myoData.gyro_log = [ myoData.gyro_log; rand(50, 3) ];
         end
 
         function startStreaming(myoData)
@@ -68,6 +78,10 @@ classdef FakeMyoData < handle
             myoData.emg_log = [];
             myoData.pose_log = [];
             myoData.rot_log = [];
+            myoData.quat_log = [];
+            myoData.gyro_log = [];
+            myoData.accel_log = [];
+            
         end
     end
 end

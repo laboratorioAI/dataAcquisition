@@ -1,5 +1,6 @@
 function updateBattery(handles)
-%updateBattery handles showing the battery in the GUI.
+%updateBattery handles showing the battery in the GUI. It is only available
+%for gForce, not myo.
 %
 
 %{
@@ -20,23 +21,26 @@ Matlab 9.9.0.1592791 (R2020b) Update 5.
 %}
 
 %%
-global gForceObject 
-bat = gForceObject.getBattery();
-gForceObject.vibrate();
-drawnow
-msjBat = sprintf('%d %%',bat);
-if bat >= 80
-    handles.bat_txt.ForegroundColor = [0.39 0.83 0.07];
-elseif bat > 60
-    handles.bat_txt.ForegroundColor = [0.93 0.69 0.13];
-elseif bat > 0
-    handles.bat_txt.ForegroundColor = 'red';
-elseif bat == 0
-    handles.bat_txt.ForegroundColor = 'black';
-    msjBat = '-';
-else
-    handles.bat_txt.ForegroundColor = 'black';
-    msjBat = '?';
+global deviceType
+global gForceObject
+if deviceType == DeviceName.gForce
+    bat = gForceObject.getBattery();
+    gForceObject.vibrate();
+    drawnow
+    msjBat = sprintf('%d %%',bat);
+    if bat >= 80
+        handles.bat_txt.ForegroundColor = [0.39 0.83 0.07];
+    elseif bat > 60
+        handles.bat_txt.ForegroundColor = [0.93 0.69 0.13];
+    elseif bat > 0
+        handles.bat_txt.ForegroundColor = 'red';
+    elseif bat == 0
+        handles.bat_txt.ForegroundColor = 'black';
+        msjBat = '-';
+    else
+        handles.bat_txt.ForegroundColor = 'black';
+        msjBat = '?';
+    end
+    
+    handles.bat_txt.String = msjBat;
 end
-
-handles.bat_txt.String = msjBat;

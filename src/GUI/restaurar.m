@@ -84,7 +84,7 @@ global theSelected isValidRestaurar userData
 nameUser = theSelected.user;
 
 %---% load userData
-filepath = [pwd '\data\' nameUser '\'];
+filepath = ['.\data\' nameUser '\'];
 loadedFile = load([ filepath 'userData.mat']);
 userData = loadedFile.userData;
 userData.counterGesture = theSelected.gesto;
@@ -97,17 +97,16 @@ nameGesture = userData.gestures.classes{userData.counterGesture};
 dataReps = ...
     userData.gestures.(nameGesture).data(1:userData.counterRepetition);
 
-% eliminatingOtherfiles();
+% eliminatingOtherfiles(); % not implemented
 saveUserData(); % updating counters!
 userData.gestures.(nameGesture).data = dataReps; % ya que saveuser elimina las reps
 
-drawnow
-delete(gcf)
 isValidRestaurar = true; % flag to tell whether restauration is valid
-clearvars -GLOBAL -EXCEPT isValidRestaurar ...
+clearvars -global -except isValidRestaurar ...
     userData myoObject deviceType gForceObject
 
-
+delete(gcf)
+drawnow
 function gestosList_Callback(hObject, eventdata, handles)
 %%
 global theSelected
