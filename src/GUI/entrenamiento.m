@@ -538,18 +538,19 @@ function acercaDe_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 str = {'Data acquisition of Hand Gesture Emg signals'
     ''
-    'Versión 3 atualizada por Jonathan Zea'
-    'Reconocimiento de Gestos'
-    'Laboratorio de Investigación en Inteligencia y Visión Artificial'
+    'Artifical Intelligence and Computer Vision Research Lab "Alan Turing"'
+    ''
     'Revisión 1: 09 de julio de 2019'
     'Revisión 2: 20 de julio de 2019'
     'Revisión 3: 20 de agosto de 2019'
     'Revisión 4: 3 de febrero de 2021'
-    'Revisión 4: 3 de febrero de 2021'
     'Revision 5: April 14 2021 (english version)'
     ''
-    'Versión 1 creada por el Ing. Jonathan Zea y el Ing. Cristhian Motoche'
-    'Agosto de 2018'};
+    'Version 1.5: July 28th, 2021'
+    ''
+    ''
+    'Version 1 created by Jonathan Zea and Cristhian Motoche'
+    'August 2018'};
 msgbox(str,'About...','help');
 
 % --------------------------------------------------------------------
