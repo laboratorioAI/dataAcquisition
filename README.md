@@ -62,5 +62,7 @@ After finishing the recordings in this interface, to carry on with the manual se
 # Citation
 If you use this Data Acquisition System, please refer and cite the following paper:
 
-[J. Zea, M. Benalcázar, L. Barona. L. Valdivieso, 2021, *"An Open-Source Data Acquisition and Manual Segmentation System for Hand Gesture Recognition based on Emg"*.](https://github.com/laboratorioAI/dataAcquisition)
-<!-- TODO: Change cite to corresponding publication -->
+[J. Zea, M. E. Benalcázar, L. I. Barona Lôpez and Á. L. Valdivieso Caraguay, "An Open-Source Data Acquisition and Manual Segmentation System for Hand Gesture Recognition based on EMG," 2021 IEEE Fifth Ecuador Technical Chapters Meeting (ETCM), Cuenca, Ecuador, 2021, pp. 1-6, doi: 10.1109/ETCM53643.2021.9590811.](https://github.com/laboratorioAI/dataAcquisition)
+
+Changelog:
+* v1.5 Version of dataset G11.
