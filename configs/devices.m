@@ -21,8 +21,6 @@ Ahora solo lo sabe dios.
 "I find that I don't understand things unless I try to program them."
 -Donald E. Knuth
 
-04 February 2021
-Matlab 9.9.0.1538559 (R2020b) Update 3.
 %}
 
 %-- Input Validation
@@ -31,24 +29,15 @@ arguments
 end
 
 %-- listing
-switch deviceType
-    case DeviceName.myo
-        listDevices = {'Myo-EPN-Marco Benalcázar'
-            'Myo-Personal-Marco Benalcázar'
-            'Myo-EPN-Lorena Barona'
-            'Myo-UDLA-Lorena Barona'
-            'Myo-UDLA-Leonardo Valdivieso'
-            'Myo-EPN-Leonardo Valdivieso'
-            'Myo-UTA-Rubén Nogales'
-            'Myo-UTA-Freddy Benalcázar'
-            'Myo-UTA-Jaime Guilcapi'
-            'Myo-ESPE-Marcelo Álvarez'
-            };
-    case DeviceName.gForce
-        listDevices = {'gForce_1'
-        'gForce_2'
-        'gForce_3'
-        'gForce_4'
-        'gForce_5'
-            };
+excel = readcell(configs("devicesFilename"));
+
+listDevices.myo = {};
+listDevices.gForce = {};
+
+for i = 2:size(excel, 1) % ignoring header
+    dev_type = excel{i, 3};
+
+    listDevices.(dev_type){end + 1, 1} = excel{i, 2};
 end
+
+listDevices = listDevices.(char(deviceType)); % filtering

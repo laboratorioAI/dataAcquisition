@@ -1,8 +1,9 @@
-function options = configs()
-%configs to store general configs.
+function param = configs(name_field)
+%configuration file to store general configs.
 %
 % Outputs
-%   options     -struct with fields
+%   param     -struct with fields || param.name_field or it returns the
+%               desired field. 
 %
 % Ejemplo
 %    = configs()
@@ -21,14 +22,35 @@ Ahora solo lo sabe dios.
 "I find that I don't understand things unless I try to program them."
 -Donald E. Knuth
 
-05 May 2021
-Matlab 9.9.0.1592791 (R2020b) Update 5.
 %}
 
+% -------- avoiding duplicated initialization
+persistent options
+if ~isempty(options)
+    % already created!
+    if nargin == 1
+        % requires 1 specific field
+        if isfield(options, name_field)
+            param = options.(name_field);
+        else
+            warning('field %s not found', name_field)
+            % returns all
+            param = options;
+        end
+
+    elseif nargin == 0
+        % everything
+        param = options;
+    end
+    return;
+end
 
 %%  software
-options.version = '1.5';
+options.version = '1.5.1';
 
+%% file names
+options.devicesFilename = 'list of devices.xlsx';
+options.collectorsFilename = 'list of recollectors.xlsx';
 
 %% paths
 options.gifsPath = '.\gifs\the11Gestures\';
@@ -42,6 +64,7 @@ options.replaces = {
     'á', 'é', 'í', 'ó', 'ú', 'ü', 'ñ', 'Á', 'É', 'Í', 'Ó', 'Ú', 'Ü', 'Ñ'
     'a', 'e', 'i', 'o', 'u', 'u', 'nh', 'A', 'E', 'I', 'O', 'U', 'U', 'Nh'};
 
+
 % %% example
 % r = options.replaces ;
 % name = 'jÓnAñZÁé';
@@ -49,3 +72,14 @@ options.replaces = {
 %     name = strrep(name, i{1},i{2});
 % end
 % name
+
+%% Getting specific field
+if nargin == 1
+    if isfield(options, name_field)
+        param = options.(name_field);
+    else
+        error('in property %s', name_field)
+    end
+elseif nargin == 0
+    param = options;
+end

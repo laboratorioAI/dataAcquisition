@@ -134,7 +134,7 @@ else
     qstring{3} = upper(lista(valor - 1).name);
     qstring{4} = '';
     qstring{5} = '¿Is it right?';
-    choice = questdlg(qstring,'Data recolector',...
+    choice = questdlg(qstring,'Data collector',...
         'Yes','No','Yes');
     if strcmpi(choice,'Yes')
         delete(gcf);

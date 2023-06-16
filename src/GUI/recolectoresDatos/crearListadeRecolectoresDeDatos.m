@@ -1,7 +1,8 @@
 function [encabezado, listaDeRecolectoresDeDatos, numUsers] =...
     crearListadeRecolectoresDeDatos()
 encabezado = 'SELECT YOUR NAME:';
-[num,txt,raw] = xlsread('Investigadores y Ayudantes.xlsx');
+
+txt = readcell(configs("collectorsFilename"));
 numUsers = size(txt,1) - 1;
 for userNum = 1:numUsers
     listaDeRecolectoresDeDatos(userNum).name = txt{userNum + 1,1};

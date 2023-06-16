@@ -2,9 +2,11 @@
 ## Description
 This software allows to record hand gesture Emg and orientation signals using a surface Emg device. Compatible devices are Myo Armband and gForce Pro.
 
-The data recollected in this interface is fully compatible with [Manual Segmentation](https://github.com/laboratorioAI/manualSegmentation).
+The data collected in this interface is fully compatible with [Manual Segmentation](https://github.com/laboratorioAI/manualSegmentation).
 
-# Execution
+# Instructions
+* Check the list of data collectors in the excel file **configs/list of collectors.xlsx**. 
+* Check the list of devices in the excel file **configs/list of devices.xlsx**. 
 Go to the repository root folder and just execute the script *ejecutar.m* in matlab.
 
 # Requirements
@@ -65,4 +67,5 @@ If you use this Data Acquisition System, please refer and cite the following pap
 [J. Zea, M. E. Benalcázar, L. I. Barona Lôpez and Á. L. Valdivieso Caraguay, "An Open-Source Data Acquisition and Manual Segmentation System for Hand Gesture Recognition based on EMG," 2021 IEEE Fifth Ecuador Technical Chapters Meeting (ETCM), Cuenca, Ecuador, 2021, pp. 1-6, doi: 10.1109/ETCM53643.2021.9590811.](https://github.com/laboratorioAI/dataAcquisition)
 
 Changelog:
+* v1.5.1 Updated recolectors and list of devices. 
 * v1.5 Version of dataset G11.
