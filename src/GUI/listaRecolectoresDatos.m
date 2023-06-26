@@ -53,12 +53,6 @@ function listaRecolectoresDatos_OpeningFcn(hObject, eventdata, handles, varargin
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to listaRecolectoresDatos (see VARARGIN)
 
-%- debug
-global isRelease;
-if isempty(isRelease)
-    isRelease = true; % flag to speed coding, must be true in release
-end
-
 %- Choose default command line output for listaRecolectoresDatos
 handles.output = hObject;
 
@@ -87,12 +81,6 @@ function varargout = listaRecolectoresDatos_OutputFcn(hObject, eventdata, handle
 % Get default command line output from handles structure
 varargout{1} = handles.output;
 
-
-%...
-global isRelease
-if ~isRelease
-    figure1_CloseRequestFcn(hObject, eventdata, handles);
-end
 
 % --- Executes on selection change in listaRecolectoresPopMenu.
 function listaRecolectoresPopMenu_Callback(hObject, eventdata, handles)
@@ -150,25 +138,12 @@ function figure1_CloseRequestFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: delete(hObject) closes the figure
-global nombreRecolectorDeDatos isRelease;
+global nombreRecolectorDeDatos;
 
-if isRelease
-    qstring = 'Are you sure to leave this program?';
-    choice = questdlg(qstring,'Exit',...
-        'YES','NO','NO');
-    if strcmpi(choice,'YES')
-        nombreRecolectorDeDatos = [];
-        delete(gcf);
-    end
-else
-    % debugging fast!
-    debugger.name =  'Rodrigo Rodriguez';
-    debugger.email = 'prueba@pruebas.prueba';
-    debugger.cellphone = '911';
-    debugger.university = 'MIT';
-    
-    nombreRecolectorDeDatos = debugger;
-    
+qstring = 'Are you sure to leave this program?';
+choice = questdlg(qstring,'Exit',...
+    'YES','NO','NO');
+if strcmpi(choice,'YES')
+    nombreRecolectorDeDatos = [];
     delete(gcf);
-    entrenamiento();
 end

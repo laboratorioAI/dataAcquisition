@@ -79,7 +79,6 @@ function varargout = sincronizacion_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 % ...
-global isRelease;
 global gestureNameSync timeGestureSync numOfRepetitions repetitionNum;
 
 
@@ -92,14 +91,11 @@ repetitionNum = 1;
 
 
 %... debug!
-if ~isRelease
-    figure1_CloseRequestFcn(hObject, eventdata, handles);
-else
-    str = 'First, the sync gesture...';
-    uiwait(msgbox(str, 'INFORMATION','help'));
-    
-    handles.sampleNumberText.String = [num2str(repetitionNum) ' / ' num2str(numOfRepetitions)];
-end
+str = 'First, the sync gesture...';
+uiwait(msgbox(str, 'INFORMATION','help'));
+
+handles.sampleNumberText.String = [num2str(repetitionNum) ' / ' num2str(numOfRepetitions)];
+
 
 
 
@@ -168,7 +164,7 @@ if errorInData
     return;
 end
 
-%-% Graficar la señal EMG
+%-% Graficar la seï¿½al EMG
 plotEMGSync(handles, userData, timeToStartRecording);
 drawnow;
 
@@ -211,16 +207,16 @@ function figure1_CloseRequestFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: delete(hObject) closes the figure
-global numOfRepetitions repetitionNum isRelease;
+global numOfRepetitions repetitionNum ;
 global userData
-if repetitionNum <= numOfRepetitions && isRelease
+if repetitionNum <= numOfRepetitions
     str = {'Can"t leave this interface.'
         'Please, complete the samples!'
         'In the case of an error, sadly, Matlab must be restarted!'};
     msgbox(str,'WARNING','warn');
 else
     clearvars -global -except myoObject deviceType gForceObject ...
-        userData isRelease;
+        userData;
     userData.counterGesture = 1;
     drawnow
     delete(gcf);
@@ -230,7 +226,7 @@ function initWaitbarProSync(handles)
 %%
 waitbarAxesSync = handles.waitbarAxesSync;
 
-% wait bar características!
+% wait bar caracterï¿½sticas!
 esfera = scatter(waitbarAxesSync, 0, 0, 'LineWidth', 1);
 esfera.MarkerFaceColor = [0 0.25 0.25];
 esfera.MarkerEdgeColor = [0 0.5 0.5];
@@ -342,7 +338,7 @@ myTimer.StartDelay = timeGestureSync;
 %
 %         if any(sample.pose_myo == 65535)
 %             errordlg('Myo Armband hand gesture recognition not working',...
-%                 '¡RECOGNITION ERROR (65535)!');
+%                 'ï¿½RECOGNITION ERROR (65535)!');
 %         end
 %
 %         sample.rot = myoObject.myoData.rot_log();
@@ -360,7 +356,7 @@ myTimer.StartDelay = timeGestureSync;
 %         % sample.emg = (double(gForceObject.getEmg())'- 127)/128;
 %         sample.emg = gForceObject.getEmg()'; %8bits
 %         if isempty(sample.emg)
-%             errordlg('¡GForce not connected!','CONNECTION ERROR!');
+%             errordlg('ï¿½GForce not connected!','CONNECTION ERROR!');
 %         end
 %
 %
