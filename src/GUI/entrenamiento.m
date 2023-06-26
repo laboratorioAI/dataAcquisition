@@ -20,6 +20,20 @@ end
 
 
 function entrenamiento_OpeningFcn(hObject, eventdata, handles, varargin)
+global gesture_set_confs
+if configs("select_gesture")
+    %------ select gestures
+    app = gestureSelector();
+    waitfor(app,'configs');
+    
+    gesture_set_confs = app.configs;
+    app.delete
+    clear app
+else
+    % default values from configs,
+    gesture_set_confs  = configs("gesture_setup");
+end
+%----------
 handles.output = hObject;
 % Update handles structure
 guidata(hObject, handles);
@@ -38,9 +52,10 @@ handles.escudoAxes.Color = 'none';
 axis off;
 
 % version
-options = configs();
-handles.txt_version.String = sprintf('ver: %s', options.version);
+handles.txt_version.String = sprintf('ver: %s', configs("version"));
+
 drawnow;
+
 
 
 function varargout = entrenamiento_OutputFcn(hObject, eventdata, handles)
@@ -102,15 +117,15 @@ moverWaitbar(handles, 0, 0);
 
 if errorInData
     uiwait(errordlg({'No data received!'
-    ''
-    'Try recording again.'
-    ''
-    'If the error keeps appearing, try any of the following:'
-    '   1. Restart the device'
-    '   2. Check the battery'
-    '   3. Unplug and plug the dongle USB'
-    '   4. Restart matlab'}, 'ERROR!', 'modal'));
-
+        ''
+        'Try recording again.'
+        ''
+        'If the error keeps appearing, try any of the following:'
+        '   1. Restart the device'
+        '   2. Check the battery'
+        '   3. Unplug and plug the dongle USB'
+        '   4. Restart matlab'}, 'ERROR!', 'modal'));
+    
     handles.repetirButton.Enable = 'on';
     handles.grabarButton.Enable = 'off';
     drawnow
@@ -155,7 +170,7 @@ drawnow
 
 function empezarEntrenamientoButton_Callback(hObject, eventdata, handles)
 %%
-global userData nombreRecolectorDeDatos isRelease; %
+global userData nombreRecolectorDeDatos; %
 % Validación de datos
 [isDataValid, msjPrint] = validacionDatos(handles);
 if isDataValid
@@ -198,7 +213,8 @@ if isDataValid
     drawnow
     
     % infame sync
-    if isRelease
+    global gesture_set_confs
+    if gesture_set_confs.include_sync
         %-% Recolectar datos de sincronización
         handles.msjText.String = 'Waiting sync recordings!';
         waitfor(playGif('sync')) % sync tutorial!
@@ -206,6 +222,8 @@ if isDataValid
         str = 'Resuming data acquisition.';
         uiwait(msgbox(str, 'Information','help'));
         drawnow
+    else
+        userData.counterGesture = 1;
     end
     handles.msjText.String = '';
     
@@ -316,7 +334,7 @@ if isConnectedMyo
     %-% devices
     handles.listOfMyos.String = devices(deviceType);
 else
-    handles.msjText.String = 'Could not connect Myo with Matlab';
+    handles.msjText.String = {'Could not connect Myo with Matlab', 'Try again'};
     ledConexion(handles, false);
     handles.empezarEntrenamientoButton.Enable = 'off';
     handles.restaurarButton.Enable = 'off';
@@ -666,7 +684,7 @@ str = {'CONTACT INFORMATION'
     ''
     'Email address:'
     'LABORATORIO DE INVESTIGACION EN INTELIGENCIA Y VISION ARTIFICIAL'
-    'laboratorio.ia@epn.edu.ec'    
+    'laboratorio.ia@epn.edu.ec'
     ''
     'With the screenshot of the error.'
     'Thank you.'};
@@ -736,3 +754,10 @@ function backG_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 playGif('backward');
+
+
+% --- Executes on button press in pushbutton20.
+function pushbutton20_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton20 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)

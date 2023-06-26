@@ -48,13 +48,21 @@ end
 %%  software
 options.version = '1.5.1';
 
-%% file names
-options.devicesFilename = 'list of devices.xlsx';
-options.collectorsFilename = 'list of recollectors.xlsx';
+%% gesture selection
+options.select_gesture = true; 
+% when false, does not display the Gesture Selector app
+
+% default options for gesture_setup when options.select_gesture is false
+options.gesture_setup.gesture_set = GestureSet.G5;
+options.gesture_setup.include_sync = false;
 
 %% paths
 options.gifsPath = '.\gifs\the11Gestures\';
 options.imgFolder = '.\images\';
+
+%% file names
+options.devicesFilename = 'list of devices.xlsx';
+options.collectorsFilename = 'list of recollectors.xlsx';
 
 %% username changes
 % letters to replace to avoid any character encoding conflict
@@ -63,7 +71,6 @@ options.imgFolder = '.\images\';
 options.replaces = {
     'á', 'é', 'í', 'ó', 'ú', 'ü', 'ñ', 'Á', 'É', 'Í', 'Ó', 'Ú', 'Ü', 'Ñ'
     'a', 'e', 'i', 'o', 'u', 'u', 'nh', 'A', 'E', 'I', 'O', 'U', 'U', 'Nh'};
-
 
 % %% example
 % r = options.replaces ;
