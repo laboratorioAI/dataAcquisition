@@ -67,5 +67,6 @@ If you use this Data Acquisition System, please refer and cite the following pap
 [J. Zea, M. E. Benalcázar, L. I. Barona Lôpez and Á. L. Valdivieso Caraguay, "An Open-Source Data Acquisition and Manual Segmentation System for Hand Gesture Recognition based on EMG," 2021 IEEE Fifth Ecuador Technical Chapters Meeting (ETCM), Cuenca, Ecuador, 2021, pp. 1-6, doi: 10.1109/ETCM53643.2021.9590811.](https://github.com/laboratorioAI/dataAcquisition)
 
 Changelog:
+* v1.6 | June 26th, 2023 | Inclues GUI to gesture set selection. 
 * v1.5.1 Updated recolectors and list of devices. 
 * v1.5 Version of dataset G11.

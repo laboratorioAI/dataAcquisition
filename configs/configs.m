@@ -46,7 +46,7 @@ if ~isempty(options)
 end
 
 %%  software
-options.version = '1.5.1';
+options.version = '1.6';
 
 %% gesture selection
 options.select_gesture = true; 
