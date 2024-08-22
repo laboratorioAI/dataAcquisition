@@ -30,8 +30,8 @@ Matlab 9.9.0.1538559 (R2020b) Update 3.
 
 %% 
 options.gestureNameSync = 'sync';
-options.timeGestureSync = 10;
-options.numOfRepetitions = 5;
+options.timeGestureSync = 5;
+options.numOfRepetitions = 1;
 % options.timeGestureSync = 1;
 % options.numOfRepetitions = 2;
 
