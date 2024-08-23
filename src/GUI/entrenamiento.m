@@ -97,7 +97,7 @@ start(myTimerColletion);
 while isempty(errorInData)
     % waiting 2 times the rep, or
     
-    if toc(a) > 2*userData.extraInfo.timePerRepetition
+    if toc(a) > 1.5*userData.extraInfo.timePerRepetition %2*userData.extraInfo.timePerRepetition
         % too long, did not return, error!
         errorInData = true;
     end
@@ -170,7 +170,7 @@ drawnow
 
 function empezarEntrenamientoButton_Callback(hObject, eventdata, handles)
 %%
-global userData nombreRecolectorDeDatos; %
+global userData nombreRecolectorDeDatos respuestas; %
 % Validación de datos
 [isDataValid, msjPrint] = validacionDatos(handles);
 if isDataValid
@@ -217,8 +217,19 @@ if isDataValid
     if gesture_set_confs.include_sync
         %-% Recolectar datos de sincronización
         handles.msjText.String = 'Waiting sync recordings!';
-        waitfor(playGif('sync')) % sync tutorial!
-        uiwait(sincronizacion); % debe terminar correctamente, si no muere!
+        %waitfor(playGif('sync')) % sync tutorial!
+
+        
+        try
+        % Aquí va el código que deseas proteger con try/catch
+            uiwait(sincronizacion); % Debe terminar correctamente, si no, se captura el error
+        catch ME
+        % Manejo del error: muestra un mensaje y reanuda la adquisición de datos
+            str = 'Error en sincronización. Se reanudará la adquisición de datos.';
+            uiwait(msgbox(str, 'Error','error'));
+        end
+
+
         str = 'Resuming data acquisition.';
         uiwait(msgbox(str, 'Information','help'));
         drawnow
@@ -603,7 +614,7 @@ function syncGesture_Callback(hObject, eventdata, handles)
 % hObject    handle to syncGesture (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-% playGif('waveOut');
+%playGif('waveOut');
 playGif('sync');
 
 % --------------------------------------------------------------------
@@ -761,3 +772,122 @@ function pushbutton20_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton20 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+
+function TempUserText_Callback(hObject, eventdata, handles)
+
+
+% --- Executes during object creation, after setting all properties.
+function TempUserText_CreateFcn(hObject, eventdata, handles)
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+
+
+function bloodPressureUserText_Callback(hObject, eventdata, handles)
+% hObject    handle to bloodPressureUserText (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of bloodPressureUserText as text
+%        str2double(get(hObject,'String')) returns contents of bloodPressureUserText as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function bloodPressureUserText_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to bloodPressureUserText (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function spoUserText_Callback(hObject, eventdata, handles)
+% hObject    handle to spoUserText (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of spoUserText as text
+%        str2double(get(hObject,'String')) returns contents of spoUserText as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function spoUserText_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to spoUserText (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function wtUserText_Callback(hObject, eventdata, handles)
+% hObject    handle to wtUserText (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of wtUserText as text
+%        str2double(get(hObject,'String')) returns contents of wtUserText as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function wtUserText_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to wtUserText (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function htUserText_Callback(hObject, eventdata, handles)
+
+function htUserText_CreateFcn(hObject, eventdata, handles)
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on mouse press over axes background.
+function gestoAxes_ButtonDownFcn(hObject, eventdata, handles)
+% hObject    handle to gestoAxes (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in surveyButton.
+function surveyButton_Callback(hObject, eventdata, handles)
+% hObject    handle to surveyButton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+try
+    survey;
+catch ME
+    errordlg(['Error opening application: ' ME.message], 'Application Error');
+end

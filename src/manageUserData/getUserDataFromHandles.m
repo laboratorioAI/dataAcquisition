@@ -15,14 +15,29 @@ end
 
 
 %% User info
+global userData;
 userInfo.username = tmpUserName;
 userInfo.age = str2double(handles.edadText.String);
 userInfo.gender = handles.genderGroup.SelectedObject.String;
 userInfo.handedness = handles.handednessGroup.SelectedObject.String;
-userInfo.ethnicGroup = handles.etniaText.String;
+%userInfo.ethnicGroup = handles.etniaText.String;
 userInfo.hasSufferedArmDamage = handles.lesionCheck.Value;
-userInfo.email = handles.emailText.String;
+%userInfo.email = handles.emailText.String;
 userInfo.occupation = handles.ocupacionText.String;
+userInfo.temperature = handles.TempUserText.String;
+userInfo.oxygenSaturation = handles.spoUserText.String;
+userInfo.bloodPressure = handles.bloodPressureUserText.String;
+userInfo.weight  = handles.wtUserText.String;
+userInfo.height  = handles.htUserText.String;
+
+if isfield(userData, 'userInfo') && isfield(userData.userInfo, 'answers')
+    userInfo.answers = userData.userInfo.answers;
+else
+    fields = {'Question1', 'Question2', 'Question3', 'Question4', 'Question5', 'Question6', 'Question7'};
+    values = repmat({'NaN'}, size(fields));
+    userInfo.answers = cell2struct(values, fields, 2);
+end
+
 
 %% Measures
 userInfo.fromElbowToMyo = str2double(handles.codMyoText.String);

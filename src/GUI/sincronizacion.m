@@ -92,7 +92,7 @@ repetitionNum = 1;
 
 %... debug!
 str = 'First, the sync gesture...';
-uiwait(msgbox(str, 'INFORMATION','help'));
+%uiwait(msgbox(str, 'INFORMATION','help'));
 
 handles.sampleNumberText.String = [num2str(repetitionNum) ' / ' num2str(numOfRepetitions)];
 
@@ -210,10 +210,13 @@ function figure1_CloseRequestFcn(hObject, eventdata, handles)
 global numOfRepetitions repetitionNum ;
 global userData
 if repetitionNum <= numOfRepetitions
-    str = {'Can"t leave this interface.'
+    drawnow
+    delete(gcf);
+    str = {'Matlab must be restarted'
         'Please, complete the samples!'
         'In the case of an error, sadly, Matlab must be restarted!'};
     msgbox(str,'WARNING','warn');
+    
 else
     clearvars -global -except myoObject deviceType gForceObject ...
         userData;

@@ -6,8 +6,8 @@ handles.nameUserText.String = userData.userInfo.username;
 %% User info
 userInfo = userData.userInfo;
 handles.edadText.String = num2str(userInfo.age);
-handles.etniaText.String = userInfo.ethnicGroup;
-handles.emailText.String = userInfo.email;
+%handles.etniaText.String = userInfo.ethnicGroup;
+%handles.emailText.String = userInfo.email;
 
 
 handles.lesionCheck.Value = userInfo.hasSufferedArmDamage;

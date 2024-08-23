@@ -23,11 +23,11 @@ else
 end
 
 % grupo Etnico
-etnia = handles.etniaText.String;
-if isempty(etnia)
-    msjPrint = 'Wrong ethnic group!';
-    return
-end
+%etnia = handles.etniaText.String;
+%if isempty(etnia)
+%    msjPrint = 'Wrong ethnic group!';
+%    return
+%end
 
 % ocupacion
 ocupacion = handles.ocupacionText.String;
