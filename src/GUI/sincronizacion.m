@@ -22,7 +22,7 @@ function varargout = sincronizacion(varargin)
 
 % Edit the above text to modify the response to help sincronizacion
 
-% Last Modified by GUIDE v2.5 19-Jul-2019 13:14:18
+% Last Modified by GUIDE v1.7 21-Jun-2024 ‏‎2:05:40
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -92,7 +92,7 @@ repetitionNum = 1;
 
 %... debug!
 str = 'First, the sync gesture...';
-uiwait(msgbox(str, 'INFORMATION','help'));
+%uiwait(msgbox(str, 'INFORMATION','help'));
 
 handles.sampleNumberText.String = [num2str(repetitionNum) ' / ' num2str(numOfRepetitions)];
 
@@ -210,10 +210,13 @@ function figure1_CloseRequestFcn(hObject, eventdata, handles)
 global numOfRepetitions repetitionNum ;
 global userData
 if repetitionNum <= numOfRepetitions
-    str = {'Can"t leave this interface.'
+    drawnow
+    delete(gcf);
+    str = {'Matlab must be restarted'
         'Please, complete the samples!'
         'In the case of an error, sadly, Matlab must be restarted!'};
     msgbox(str,'WARNING','warn');
+    
 else
     clearvars -global -except myoObject deviceType gForceObject ...
         userData;

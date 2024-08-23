@@ -22,7 +22,7 @@ function varargout = listaRecolectoresDatos(varargin)
 
 % Edit the above text to modify the response to help listaRecolectoresDatos
 
-% Last Modified by GUIDE v2.5 19-Jul-2019 08:37:11
+% Last Modified by GUIDE v1.7 21-Jun-2024 ‏‎2:05:40
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -115,19 +115,21 @@ if valor == 1 % No se selecciona un nombre
     uiwait(msgbox(str,'WARNING','warn'));
 else
     % popMenuList = get(handles.listaRecolectoresPopMenu, 'String');
-    
+    delete(gcf);
+    entrenamiento();
     nombreRecolectorDeDatos = lista(valor - 1);
-    qstring{1} = 'You selected:';
-    qstring{2} = '';
-    qstring{3} = upper(lista(valor - 1).name);
-    qstring{4} = '';
-    qstring{5} = '¿Is it right?';
-    choice = questdlg(qstring,'Data collector',...
-        'Yes','No','Yes');
-    if strcmpi(choice,'Yes')
-        delete(gcf);
-        entrenamiento();
-    end
+    % qstring{1} = 'You selected:';
+    % qstring{2} = '';
+    % qstring{3} = upper(lista(valor - 1).name);
+    % qstring{4} = '';
+    % qstring{5} = '¿Is it right?';
+    % choice = questdlg(qstring,'Data collector',...
+    %     'Yes','No','Yes');
+    % 
+    % if strcmpi(choice,'Yes')
+    %     delete(gcf);
+    %     entrenamiento();
+    % end
     
 end
 

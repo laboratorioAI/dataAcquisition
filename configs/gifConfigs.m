@@ -23,7 +23,7 @@ Ahora solo lo sabe dios.
 %%
 % the number of times the gif will be repeted before continuing with the
 % acquisition
-options.numberOfGifRepetitions = 2;
+options.numberOfGifRepetitions = 1;
 % options.numberOfGifRepetitions = 0;
 
 % seconds that each frame of the gif is displayed
