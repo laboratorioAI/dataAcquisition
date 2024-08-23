@@ -22,7 +22,7 @@ function varargout = listaRecolectoresDatos(varargin)
 
 % Edit the above text to modify the response to help listaRecolectoresDatos
 
-% Last Modified by GUIDE v2.5 19-Jul-2019 08:37:11
+% Last Modified by GUIDE v1.7 21-Jun-2024 ‏‎2:05:40
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
