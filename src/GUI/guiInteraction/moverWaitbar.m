@@ -40,12 +40,13 @@ elseif (porcentaje >= transicion / 3) && (porcentaje < transicion * 2 / 3)
 elseif (porcentaje >= transicion * 2 / 3) && (porcentaje < transicion * 7/8)
     handles.msjText.String = '1';
 
-elseif (porcentaje >= transicion * 7/8 ) && (porcentaje < transicion)
-    frecuencia = 3192;
-    time = 0:1/frecuencia:0.5;
-    y = sin(2*pi*1000*time);
-    sound(y, frecuencia);
-    
+elseif (porcentaje >= transicion * 5/8 ) && (porcentaje < transicion)
+ frecuencia = 44100;  
+tiempo = 0:1/frecuencia:0.3;  
+frecuencia_sonido = 440;  
+y = sin(2*pi*frecuencia_sonido*tiempo); 
+sound(y, frecuencia); 
+
 elseif porcentaje >= transicion
     handles.msjText.String = 'GO!';
     colorLetter = [1 0 0];
