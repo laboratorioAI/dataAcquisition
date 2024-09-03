@@ -511,14 +511,25 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 function ocupacionText_Callback(hObject, eventdata, handles)
-% hObject    handle to ocupacionText (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% Obtener el índice de la opción seleccionada en el popupmenu
+    index = get(hObject, 'Value');
+    
+    % Obtener el texto de la opción seleccionada
+    ocupacion = get(hObject, 'String');
+    
+    % Extraer la opción seleccionada usando el índice
+    selectedOcupacion = ocupacion{index};
+    
+    % Mostrar la opción seleccionada en la ventana de comandos
+    disp(['Ocupación seleccionada: ', selectedOcupacion]);
 
-% Hints: get(hObject,'String') returns contents of ocupacionText as text
-%        str2double(get(hObject,'String')) returns contents of ocupacionText as a double
+    % Guardar la ocupación seleccionada en handles para uso futuro
+    handles.selectedOcupacion = selectedOcupacion;
+    
+    % Actualizar la estructura handles
+    guidata(hObject, handles);
 
-
+    
 % --- Executes during object creation, after setting all properties.
 function ocupacionText_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to ocupacionText (see GCBO)
@@ -892,3 +903,11 @@ try
 catch ME
     errordlg(['Error opening application: ' ME.message], 'Application Error');
 end
+
+
+% --- If Enable == 'on', executes on mouse press in 5 pixel border.
+% --- Otherwise, executes on mouse press in 5 pixel border or over listOfMyos.
+function listOfMyos_ButtonDownFcn(hObject, eventdata, handles)
+% hObject    handle to listOfMyos (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
