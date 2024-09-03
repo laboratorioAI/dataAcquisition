@@ -38,5 +38,10 @@ cleaningTimers();
 
 
 %% Start data acquisition
-listaRecolectoresDatos();
+
+%listaRecolectoresDatos();
+
+app = listaRecolectoresDatos_App();
+app.figure1.Visible = 'on';
+
 cleaningTimers();
