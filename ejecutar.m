@@ -42,6 +42,6 @@ cleaningTimers();
 %listaRecolectoresDatos();
 
 app = listaRecolectoresDatos_App();
-app.figure1.Visible = 'on';
+%app.figure1.Visible = 'on';
 
 cleaningTimers();
