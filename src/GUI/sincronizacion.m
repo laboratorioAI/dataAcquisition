@@ -58,6 +58,7 @@ handles.output = hObject;
 guidata(hObject, handles);
 
 movegui(hObject,'center'); % mostrando en el centro
+
 initWaitbarProSync(handles);
 
 
