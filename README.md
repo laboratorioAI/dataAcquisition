@@ -64,7 +64,7 @@ Next, go to environment variables, edit the PATH variable, and paste the path we
 
 Once the project is on our computer, we simply need to run the script `ejecutar.m`. We must select a user and then in Gesture Selector G5. The following window will open.
 
-![image.png](image.png)
+
 
 On the right side of the window, we have a panel labeled "User Information" where we input the various data collected from the user, such as: age, occupation, gender, dominant hand, temperature, pressure, SpO2, weight, and height.
 
@@ -72,7 +72,6 @@ There is a "Survey" button that opens a window with a set of questions to be fil
 
 In "Device Connection", by pressing one of the buttons according to the device we are going to use, our program will automatically connect to it.
 
-![image.png](image%201.png)
 
 If the armband is successfully connected, the sample recording will be enabled.
 
