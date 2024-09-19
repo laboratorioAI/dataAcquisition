@@ -14,7 +14,12 @@ jonathan.a.zea@ieee.org
 05 April 2021
 Matlab 9.9.0.1592791 (R2020b) Update 5.
 %}
-
+%{
+Last version 1.8 by Alexander M.
+23-Sep-2024
+"The question is not whether machines think, but whether they do it better
+than humans."
+%}
 %% Clean environment
 close all;
 % myoObject global variable that handles myo armband
