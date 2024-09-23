@@ -70,6 +70,11 @@ Once the project is on our computer, we simply need to run the script `ejecutar.
 
 
 
+![image.png](/images/README/image.png)
+
+
+
+
 On the right side of the window, we have a panel labeled "User Information" where we input the various data collected from the user, such as: age, occupation, gender, dominant hand, temperature, pressure, SpO2, weight, and height.
 
 There is a "Survey" button that opens a window with a set of questions to be filled out with the user’s answers.
@@ -81,11 +86,6 @@ In "Device Connection", by pressing one of the buttons according to the device w
 
 
 If the armband is successfully connected, the sample recording will be enabled.
-
-
-![image.png](/images/README/image.png)
-
-
 
 In the central part of the screen, we have the "Sample" panel, which is divided into three sections. In the "Sample" area, there are two buttons: RECORD and REPEAT. RECORD is used to capture a new sample, and REPEAT allows us to repeat the last sample in case of any issues.
 
