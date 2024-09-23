@@ -13,7 +13,7 @@ The data collected in this interface is fully compatible with [Manual Segmentat
 ## **Myo**
 
 Using the Myo Armband has an easier installation procedure. Check the [MyoMex repository](https://github.com/mark-toma/MyoMex) for the tutorial installation. We have included in this repository a copy of MyoMex.
-![image.png](/images/readme/image2.png)
+![image.png](/images/README/image2.png)
 
 ## **Gforce**
 
@@ -73,9 +73,9 @@ There is a "Survey" button that opens a window with a set of questions to be fil
 
 In "Device Connection", by pressing one of the buttons according to the device we are going to use, our program will automatically connect to it.
 
-![image.png](/images/readme/image1.png)
+![image.png](/images/README/image1.png)
 If the armband is successfully connected, the sample recording will be enabled.
-![image.png](/images/readme/image.png)
+![image.png](/images/README/image.png)
 
 In the central part of the screen, we have the "Sample" panel, which is divided into three sections. In the "Sample" area, there are two buttons: RECORD and REPEAT. RECORD is used to capture a new sample, and REPEAT allows us to repeat the last sample in case of any issues.
 
@@ -87,7 +87,7 @@ Finally, in the "Acquisition" zone, pressing the "New" button generates a new se
 To take a sample, as mentioned before, press the “RECORD” button, which starts a countdown from 3, while a bar indicates the duration of the sample through its movement. The respective gesture must be performed when the GO symbol appears.
 
 Finally, after the sample is taken, in the lower section there is an area labeled "Device Signals" that will graphically display the signals taken by the various sensors of the armband.
-![image.png](/images/readme/image3.png)
+![image.png](/images/README/image3.png)
 
 Once all 50 samples for each of the 6 gestures are taken, the application will automatically close.
 
