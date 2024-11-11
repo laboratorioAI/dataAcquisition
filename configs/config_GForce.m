@@ -32,7 +32,12 @@ Ahora solo lo sabe dios.
 20 January 2021
 Matlab 9.9.0.1538559 (R2020b) Update 3.
 %}
-
+%{
+Last version 1.8 by Alexander M.
+23-Sep-2024
+"The question is not whether machines think, but whether they do it better
+than humans."
+%}
 %% Input Validation
 arguments
     configProfile (1, :) char = 'default';
