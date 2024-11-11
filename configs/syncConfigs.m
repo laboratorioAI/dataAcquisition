@@ -27,12 +27,7 @@ Ahora solo lo sabe dios.
 Matlab 9.9.0.1538559 (R2020b) Update 3.
 %}
 
-%{
-Last version 1.8 by Alexander M.
-23-Sep-2024
-"The question is not whether machines think, but whether they do it better
-than humans."
-%}
+
 %% 
 options.gestureNameSync = 'sync';
 options.timeGestureSync = 5;

@@ -23,12 +23,7 @@ Ahora solo lo sabe dios.
 -Donald E. Knuth
 
 %}
-%{
-Last version 1.8 by Alexander M.
-23-Sep-2024
-"The question is not whether machines think, but whether they do it better
-than humans."
-%}
+
 % -------- avoiding duplicated initialization
 persistent options
 if ~isempty(options)

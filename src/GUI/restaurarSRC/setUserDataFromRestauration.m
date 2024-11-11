@@ -23,17 +23,6 @@ handles.perimetroText.String = num2str(userInfo.armPerimeter);
 % dice myo, pero es myo y gforce
 extraInfo = userData.extraInfo;
 myoName = userData.deviceInfo.deviceName;
-
-    disp('Valor actual de listOfMyos.String:');
-    disp(get(handles.listOfMyos, 'String'));
-    disp(handles.listOfMyos)
-    selectedValue = 1;
-     set(handles.listOfMyos, 'Value', selectedValue);
-if ischar(myoName)
-    myoName = {myoName};  % Convertir de string a celda
-elseif ~iscell(myoName)
-    myoName = {myoName};  % Convertir en celda si no lo es
-end
 set(handles.listOfMyos,'String',myoName);
 
 global deviceType

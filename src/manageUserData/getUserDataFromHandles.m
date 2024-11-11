@@ -23,14 +23,7 @@ userInfo.handedness = handles.handednessGroup.SelectedObject.String;
 %userInfo.ethnicGroup = handles.etniaText.String;
 userInfo.hasSufferedArmDamage = handles.lesionCheck.Value;
 %userInfo.email = handles.emailText.String;
-% Get the list of items in the pop-up menu
-menuItems = handles.ocupacionText.String;
-
-% Get the index of the selected item
-selectedIndex = handles.ocupacionText.Value;
-
-% Get the selected item as a string
-userInfo.occupation = menuItems{selectedIndex};
+userInfo.occupation = handles.ocupacionText.String;
 userInfo.temperature = handles.TempUserText.String;
 userInfo.oxygenSaturation = handles.spoUserText.String;
 userInfo.bloodPressure = handles.bloodPressureUserText.String;
