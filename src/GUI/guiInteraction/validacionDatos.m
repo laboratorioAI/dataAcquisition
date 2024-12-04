@@ -13,7 +13,7 @@ end
 edad = str2double(handles.edadText.String);
 if ~isnumeric(edad) || isnan(edad) || edad <= 5
     msjPrint = 'Wrong age!';
-    return
+    return 
 else
     % why?
 %     if edad < 18
@@ -30,8 +30,8 @@ end
 %end
 
 % ocupacion
-ocupacion = handles.ocupacionText.String;
-if isempty(ocupacion)
+valor = get(handles.ocupacionText, 'Value');
+if valor == 1 % No se selecciona un nombre
     msjPrint = 'Wrong occupation!';
     return
 end
